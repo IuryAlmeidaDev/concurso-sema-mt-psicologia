@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Guia de Estudo — SEMA/MT 2026 (Analista em Psicologia)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    :root {
+      --primary: #8b5cf6;
+      --primary-hover: #7c3aed;
+      --primary-light: #f5f3ff;
+      --bg: #ffffff;
+      --bg-alt: #f8fafc;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --sidebar-w: 320px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.65;
+    }
+
+    /* Layout */
+    .app { display: flex; min-height: 100vh; }
+    
+    /* Sidebar */
+    .sidebar {
+      width: var(--sidebar-w);
+      background: var(--bg-alt);
+      border-right: 1px solid var(--border);
+      position: fixed;
+      top: 0; bottom: 0; left: 0;
+      display: flex;
+      flex-direction: column;
+      z-index: 50;
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar-header {
+      padding: 20px 20px 14px;
+      border-bottom: 1px solid var(--border);
+      background: #ffffff;
+    }
+    .brand-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .brand-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-top: 2px;
+    }
+    .search-box {
+      margin-top: 12px;
+      position: relative;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 9px 12px 9px 34px;
+      font-size: 0.85rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #ffffff;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .search-box input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.18);
+    }
+    .search-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .sidebar-menu {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 12px 24px;
+    }
+    .category-group { margin-bottom: 20px; }
+    .category-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+      padding: 0 10px 6px;
+    }
+    .nav-item {
+      display: block;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: #334155;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      margin-bottom: 2px;
+    }
+    .nav-item:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+    .nav-item.active {
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 700;
+      border-left: 3px solid var(--primary);
+    }
+
+    /* Main Content */
+    .main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .top-bar {
+      height: 58px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      background: #ffffff;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+    .top-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+    .badge-info {
+      background: #f1f5f9;
+      color: #475569;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .badge-primary {
+      background: var(--primary-light);
+      color: var(--primary);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .github-link {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #334155;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .github-link:hover { color: var(--primary); }
+
+    .content-container {
+      max-width: 960px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 40px 32px 80px;
+    }
+
+    /* Markdown Body */
+    .markdown-body h1 {
+      font-size: 2.1rem;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      border-bottom: 2px solid #f1f5f9;
+      padding-bottom: 12px;
+    }
+    .markdown-body h2 {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-top: 36px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    .markdown-body h3 {
+      font-size: 1.18rem;
+      font-weight: 700;
+      color: #334155;
+      margin-top: 24px;
+      margin-bottom: 10px;
+    }
+    .markdown-body p {
+      margin-bottom: 16px;
+      color: #334155;
+      font-size: 1rem;
+    }
+    .markdown-body ul, .markdown-body ol {
+      margin-bottom: 20px;
+      padding-left: 24px;
+      color: #334155;
+    }
+    .markdown-body li { margin-bottom: 6px; }
+
+    /* Tables */
+    .markdown-body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      font-size: 0.92rem;
+    }
+    .markdown-body th, .markdown-body td {
+      border: 1px solid var(--border);
+      padding: 11px 16px;
+    }
+    .markdown-body th {
+      background: #f1f5f9;
+      color: #1e293b;
+      font-weight: 700;
+      text-align: left;
+    }
+    .markdown-body tr:nth-child(even) { background: #f8fafc; }
+
+    /* Callouts */
+    .callout {
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin: 20px 0;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      border-left: 5px solid;
+    }
+    .callout-note {
+      background: #eff6ff;
+      border-color: #3b82f6;
+      color: #1e40af;
+    }
+    .callout-tip {
+      background: #ecfdf5;
+      border-color: #10b981;
+      color: #065f46;
+    }
+    .callout-warning {
+      background: #fffbeb;
+      border-color: #f59e0b;
+      color: #92400e;
+    }
+    .callout-important {
+      background: #f5f3ff;
+      border-color: #8b5cf6;
+      color: #5b21b6;
+    }
+
+    /* Mermaid */
+    .mermaid {
+      background: #f8fafc;
+      padding: 24px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      margin: 24px 0;
+      display: flex;
+      justify-content: center;
+      overflow-x: auto;
+    }
+
+    /* Tasks Checkboxes */
+    .task-list-item {
+      list-style-type: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .task-list-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    /* Navigation Footer */
+    .doc-nav {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .doc-btn {
+      display: flex;
+      flex-direction: column;
+      padding: 12px 18px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      text-decoration: none;
+      color: #334155;
+      transition: all 0.2s;
+      max-width: 48%;
+      cursor: pointer;
+    }
+    .doc-btn:hover {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+    .doc-btn-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+    .doc-btn-title {
+      font-size: 0.92rem;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+      .sidebar.open {
+        transform: translateX(0);
+      }
+      .main {
+        margin-left: 0;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+      .content-container {
+        padding: 24px 18px 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-title">🧠 SEMA/MT 2026</div>
+        <div class="brand-sub">Analista em Psicologia • Perfil 7</div>
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="searchInput" placeholder="Pesquisar em Psicologia...">
+        </div>
+      </div>
+      <nav class="sidebar-menu" id="sidebarMenu"></nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main">
+      <header class="top-bar">
+        <div class="top-bar-left">
+          <button class="mobile-menu-btn" id="menuToggle" aria-label="Menu">☰</button>
+          <span class="badge-primary">Salário R$ 8.269,16</span>
+          <span class="badge-info">Prova: 13/12/2026</span>
+        </div>
+        <a href="https://github.com/IuryAlmeidaDev/concurso-sema-mt-psicologia" target="_blank" class="github-link">
+          🐙 Repositório GitHub
+        </a>
+      </header>
+
+      <main class="content-container">
+        <article class="markdown-body" id="contentArea">
+          Carregando conteúdo de Psicologia...
+        </article>
+
+        <div class="doc-nav" id="docNav"></div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const DOCS = [{"id": "00-dashboard", "title": "🎯 Dashboard e Visão Geral", "category": "Planejamento", "fileName": "00 - Dashboard.md", "content": "---\ntags:\n  - concurso\n  - sema-mt\n  - psicologia\n  - 2026\n---\n# 🎯 Concurso SEMA/MT 2026 — Analista em Psicologia\n\n## 📌 Resumo Rápido do Cargo\n- **Cargo:** Analista de Desenvolvimento Econômico e Social\n- **Perfil:** Perfil 7 — Psicologia\n- **Órgão:** Secretaria de Estado de Meio Ambiente (SEMA/MT)\n- **Banca Examinadora:** Fundação Cesgranrio\n- **Remuneração Inicial:** **R$ 8.269,16**\n- **Jornada de Trabalho:** 40 horas semanais\n- **Vagas:** Cadastro de Reserva (CR)\n- **Taxa de Inscrição:** R$ 150,00\n- **Período de Inscrições:** 17/09/2026 a 14/10/2026 (até 16h MT / www.cesgranrio.org.br)\n- **Data da Prova:** **13/12/2026** (Duração: 5 horas)\n- **Local de Realização:** Cuiabá/MT\n- **Requisito de Escolaridade:** Diploma, devidamente registrado, de curso de graduação em Psicologia, reconhecido pelo MEC, e registro no Conselho Regional de Psicologia (CRP).\n\n---\n\n## 📊 Estrutura das Provas (Total: 80 Pontos)\n\n| Etapa | Disciplina | Questões | Pontos | Caráter | Critério Mínimo |\n| :--- | :--- | :--- | :--- | :--- | :--- |\n| **1ª Etapa** | Língua Portuguesa | 15 | 15 | Elim. / Classif.* | Não zerar |\n| **1ª Etapa** | Geografia e História de MT | 10 | 10 | Elim. / Classif.* | Não zerar |\n| **1ª Etapa** | Ética, Filosofia, Atualidades e Legislação | 5 | 5 | Elim. / Classif.* | Não zerar |\n| **1ª Etapa** | **Conhecimentos Específicos (Transversais + Psicologia)** | **40** | **40** | **Elim. / Classif.** | **Não zerar** |\n| **2ª Etapa** | **Prova Discursiva (Estudo de Caso/Parecer Técnico de Psicologia)** | **1** | **10** | **Elim. / Classif.** | **6,0 pontos (60%)** |\n| **TOTAL** | **Prova Objetiva + Discursiva** | **71** | **80 pts** | - | **42 pts Obj (60%) + 6,0 Disc** |\n\n> [!WARNING]\n> **REGRAS ELIMINATÓRIAS OBRIGATÓRIAS:**\n> 1. Ter aproveitamento inferior a **60% do total da Prova Objetiva** (mínimo de **42 pontos** de 70).\n> 2. Obter nota **ZERO** em qualquer uma das 4 disciplinas da prova objetiva.\n> 3. Obter menos de **6,0 pontos (60%)** na Prova Discursiva.\n\n---\n\n## 🧭 Navegação do Vault de Psicologia\n- [[01 - Fluxo de Estudo]] — Planejamento estratégico em 5 fases\n- [[02 - Cronograma Oficial]] — Calendário completo do edital\n- [[03 - Língua Portuguesa]] — Teoria gramatical e perfil da banca (15 questões)\n- [[04 - Geografia e História de MT]] — Aspectos regionais, biomas e história política (10 questões)\n- [[05 - Ética, Filosofia, Atualidades e Legislação]] — Estatuto dos Servidores (LC 04/90) e Código de Ética (LC 112/02)\n- [[06 - Conteúdos Transversais - Gestão Pública e Direitos Humanos]] — Políticas públicas, povos indígenas e quilombolas\n- [[07 - Conteúdos Transversais - Meio Ambiente e Clima]] — PNMA, Código Florestal, Mudanças Climáticas, Recursos Hídricos e CAR/PRA\n- [[08 - Ética Profissional e Resoluções do CFP]] — Código de Ética, Resoluções 06/19, 31/22, 14/23, 08/25 e SATEPSI\n- [[09 - Psicologia Organizacional e Gestão de Pessoas]] — Gestão por Competências, Avaliação de Desempenho e Conflitos\n- [[10 - Recrutamento, Seleção e TD&E]] — Processos seletivos, entrevistas por competências, LNT e Aposentadoria\n- [[11 - Cultura, Clima e Motivação no Trabalho]] — Schein, Teorias Motivacionais e Políticas Afirmativas\n- [[12 - Psicologia Social, Grupos e Liderança]] — Dinâmica de grupos, equipes de trabalho e estilos de liderança\n- [[13 - Intervenção em Crises, Emergências e Catástrofes]] — Primeiros socorros psicológicos e desastres ambientais\n- [[14 - Saúde do Trabalhador e Normas Regulamentadoras]] — NR-1 (PGR), NR-5 (CIPA), NR-17 (Ergonomia) e SESMT\n- [[15 - Psicopatologia e Clínicas do Trabalho]] — Dejours, Psicodinâmica do Trabalho, Burnout e Portaria GM/MS 1.999/2023\n- [[16 - Assédio, Discriminação e Violência no Trabalho]] — Assédio moral e sexual, nexo causal e acidentes\n- [[17 - Qualidade de Vida e Bem-Estar no Trabalho (QVT)]] — Modelos de QVT e ergonomia cognitiva\n- [[18 - Prova Discursiva de Psicologia — Estratégia]] — 8 temas quentes, estrutura de resposta e estudo de caso\n- [[19 - Estratégia Banca Cesgranrio para Psicologia]] — Análise das questões da banca e gestão de tempo\n\n---\n\n## 📋 Checklist Geral de Progresso\n- [ ] Fase 1: Domínio do Código de Ética do Psicólogo e Resoluções do CFP\n- [ ] Fase 2: Psicologia Organizacional e Gestão Estratégica de Pessoas\n- [ ] Fase 3: Saúde do Trabalhador, Normas Regulamentadoras (NR-1, NR-17) e Burnout\n- [ ] Fase 4: Conteúdos Transversais (Gestão Pública, Direitos Humanos e Meio Ambiente)\n- [ ] Fase 5: Conhecimentos Gerais de MT (Geografia, História e Legislação Estadual)\n- [ ] Fase 6: Prática semanal de questões e redação de pareceres técnicos\n"}, {"id": "01-fluxo", "title": "📋 Plano de Estudo em 5 Fases", "category": "Planejamento", "fileName": "01 - Fluxo de Estudo.md", "content": "---\ntags:\n  - fluxo\n  - estrategia\n  - planejamento\n---\n# 📋 Fluxo de Estudo — Psicologia SEMA/MT 2026\n\n## 🗺️ Diagrama de Fluxo Estratégico\n\n```mermaid\nflowchart TD\n    A[\"FASE 1 (Semanas 1-3)\nÉtica CFP + Resoluções (Docs, Avaliação, Riscos) + Português\"] --> B[\"FASE 2 (Semanas 4-6)\nPsicologia Organizacional + R&S, TD&E, Cultura e Motivação\"]\n    B --> C[\"FASE 3 (Semanas 7-9)\nSaúde do Trabalhador + NRs (1, 5, 17) + Dejours, Burnout e Assédio\"]\n    C --> D[\"FASE 4 (Semanas 10-12)\nTransversais (Gestão Pública, Direitos Humanos, Meio Ambiente) + Geo/Hist MT\"]\n    D --> E[\"FASE 5 (Semanas 13-14)\nSimulados Finais + Redação Técnica (Parecer/Estudo de Caso) + Revisão\"]\n```\n\n---\n\n## 🎯 Detalhamento das Fases\n\n### FASE 1: Ética Profissional & Fundamentos da Avaliação (Semanas 1 a 3)\n* **Objetivo:** Garantir pontuação máxima em legislação profissional do CFP e estruturar a base em Língua Portuguesa.\n* **Disciplinas:**\n  - [[08 - Ética Profissional e Resoluções do CFP]]: Código de Ética (Res. 10/2005), Documentos Escritos (Res. 06/2019), Avaliação Psicológica e SATEPSI (Res. 31/2022 e 08/2025), Riscos Psicossociais (Res. 14/2023).\n  - [[03 - Língua Portuguesa]]: Crase, concordância, regência e pontuação com foco na Cesgranrio.\n* **Carga:** 20h a 25h semanais.\n\n### FASE 2: Psicologia Organizacional e Gestão de Pessoas (Semanas 4 a 6)\n* **Objetivo:** Dominar os processos clássicos e modernos de Recursos Humanos e Comportamento Organizacional no setor público.\n* **Disciplinas:**\n  - [[09 - Psicologia Organizacional e Gestão de Pessoas]]: Gestão por Competências (CHA), Gestão de Desempenho (360º) e Gestão de Conflitos.\n  - [[10 - Recrutamento, Seleção e TD&E]]: Técnicas de entrevista, levantamento de necessidades de treinamento (LNT), avaliação em níveis de Kirkpatrick.\n  - [[11 - Cultura, Clima e Motivação no Trabalho]]: Níveis de cultura de Edgar Schein, teorias de Maslow, Herzberg e Vroom.\n  - [[12 - Psicologia Social, Grupos e Liderança]]: Estilos de liderança e processos grupais.\n* **Carga:** 25h semanais + 1º treino de discursiva.\n\n### FASE 3: Saúde Mental no Trabalho & Clínicas do Trabalho (Semanas 7 a 9)\n* **Objetivo:** Aprofundar no eixo temático de maior relevância prática para servidores estaduais e atuação junto ao SESMT/CIPA.\n* **Disciplinas:**\n  - [[14 - Saúde do Trabalhador e Normas Regulamentadoras]]: NR-1 (PGR e riscos psicossociais), NR-5 (CIPA e assédio), NR-17 (Ergonomia).\n  - [[15 - Psicopatologia e Clínicas do Trabalho]]: Psicodinâmica do Trabalho (Christophe Dejours), Teoria do Estresse, Burnout e Portaria GM/MS 1.999/2023.\n  - [[16 - Assédio, Discriminação e Violência no Trabalho]]: Assédio moral e sexual no ambiente público.\n  - [[17 - Qualidade de Vida e Bem-Estar no Trabalho (QVT)]]: Modelos de QVT.\n  - [[13 - Intervenção em Crises, Emergências e Catástrofes]]: Apoio psicossocial em desastres.\n* **Carga:** 25h semanais + 2º treino de discursiva.\n\n### FASE 4: Conteúdos Transversais e Regionais de MT (Semanas 10 a 12)\n* **Objetivo:** Conquistar os pontos de Gestão Pública, Meio Ambiente e História/Geografia de MT para blindar a prova contra eliminação.\n* **Disciplinas:**\n  - [[06 - Conteúdos Transversais - Gestão Pública e Direitos Humanos]]: Ciclo de políticas públicas, povos indígenas e comunidades quilombolas.\n  - [[07 - Conteúdos Transversais - Meio Ambiente e Clima]]: PNMA (Lei 6.938), Código Florestal, Mudanças Climáticas, CAR/PRA.\n  - [[04 - Geografia e História de MT]]: Geografia regional, biomas, Cuiabá colonial, Rusga e desmembramento.\n  - [[05 - Ética, Filosofia, Atualidades e Legislação]]: Estatuto MT (LC 04/90), Código de Ética MT (LC 112/02).\n* **Carga:** 25h semanais.\n\n### FASE 5: Reta Final, Simulados e Prova Discursiva (Semanas 13 e 14)\n* **Objetivo:** Treino de tempo de prova e consolidação da escrita técnica.\n* **Atividades:**\n  - 2 simulados completos de 5 horas cronometradas (70 questões + 1 discursiva técnica).\n  - Revisão rápida das NRs, resoluções do CFP e leis estaduais.\n  - Aperfeiçoamento de pareceres e relatórios psicológicos.\n\n---\n\n## ⚖️ Distribuição de Tempo por Peso\n\n```\nConhecimentos Específicos (Transversais + Psicologia) (40 pts | 57%) ──████████████████ (55% do tempo)\nLíngua Portuguesa (15 pts | 21%)                                     ──██████ (18% do tempo)\nGeografia e História de MT (10 pts | 14%)                            ──████ (15% do tempo)\nÉtica, Filosofia e Legislação MT (5 pts | 7%)                        ──██ (12% do tempo)\nProva Discursiva Técnica (10 pts separados)                          ── 1 redação a cada 7-10 dias\n```\n"}, {"id": "02-cronograma", "title": "📅 Cronograma Oficial do Edital", "category": "Planejamento", "fileName": "02 - Cronograma Oficial.md", "content": "---\ntags:\n  - cronograma\n  - datas\n  - edital\n---\n# 📅 Cronograma Oficial — Concurso SEMA/MT 2026\n\nPrincipais datas e prazos extraídos do **Anexo IV** do Edital nº 1/2026 da SEMA/MT:\n\n| Período / Data | Evento Oficial | Detalhes |\n| :--- | :--- | :--- |\n| **01/09/2026** | Publicação do Edital no Diário Oficial do Estado de MT | - |\n| **17/09 a 14/10/2026** | **Inscrições no site da Fundação Cesgranrio** (até 16h MT) | Taxa: R$ 150,00 |\n| 17/09 a 24/09/2026 | Solicitação de isenção da taxa de inscrição | Prazo improrrogável |\n| 30/09/2026 | Resultado preliminar das isenções | www.cesgranrio.org.br |\n| 30/09 e 01/10/2026 | Recursos contra indeferimento de isenção | 2 dias úteis |\n| 09/10/2026 | Resultado definitivo da isenção | - |\n| Conforme DAR | Data limite de pagamento do boleto bancário (DAR) | - |\n| 22/10/2026 | Resultado preliminar de inscrições deferidas (PcD, Negros, Especial) | - |\n| **08/12/2026** | **Disponibilização do Cartão de Confirmação (Locais de Prova)** | Consulta individual |\n| **13/12/2026** | **APLICAÇÃO DAS PROVAS OBJETIVAS E DISCURSIVA** | **Duração: 5h em Cuiabá/MT** |\n| 14/12/2026 | Divulgação dos gabaritos preliminares das Provas Objetivas | A partir das 10h |\n| 14 e 15/12/2026 | Prazo para recursos contra questões e gabaritos preliminares | - |\n| 22/01/2027 | Imagem digital do Cartão-Resposta disponível | Área do Candidato |\n| **28/01/2027** | **Notas da Prova Objetiva e Nota Preliminar da Discursiva** | Marco classificatório |\n| 28 e 29/01/2027 | Vista da Prova Discursiva e pedido de revisão de notas | - |\n| 16/02/2027 | Resultado final dos recursos da Prova Discursiva | - |\n| 27/02 a 01/03/2027 | Heteroidentificação presencial e perícia médica PcD | Presencial em Cuiabá |\n| 16/03/2027 | Resultado preliminar da Heteroidentificação e PcD | - |\n| **27/03/2027** | **DIVULGAÇÃO DO RESULTADO FINAL E HOMOLOGAÇÃO** | Publicação no DOE-MT |\n\n> [!IMPORTANT]\n> **Validade do Certame:** 2 (dois) anos, contados da homologação do resultado final, prorrogável uma única vez por mais 2 anos.\n"}, {"id": "03-portugues", "title": "📝 Língua Portuguesa", "category": "Conhecimentos Básicos", "fileName": "03 - Língua Portuguesa.md", "content": "---\ntags: [portugues, basico, 15-questoes]\n---\n# 📝 Língua Portuguesa (15 questões | 15 pontos)\n\n> [!IMPORTANT]\n> Você não pode zerar esta disciplina! Uma base sólida em Língua Portuguesa é essencial para a aprovação.\n\n## 1. Compreensão e interpretação de textos\n- **Resumo Teórico:** Compreensão refere-se ao que está escrito (dados explícitos). Interpretação refere-se ao que se deduz do texto (implícitos).\n- **Dicas Cesgranrio:** A banca gosta de textos densos (artigos de opinião, crônicas). Leia o comando da questão antes do texto.\n- **Pontos-chave:**\n  - Diferencie informação explícita de inferência.\n  - Atenção ao vocabulário.\n  - Identifique o tema central e a intenção do autor.\n\n## 2. Argumentação e persuasão\n- **Resumo Teórico:** Argumentação visa convencer o leitor. Utiliza-se de dados, exemplos, autoridades e raciocínio lógico. Falácias são erros de raciocínio.\n- **Dicas Cesgranrio:** Cuidado com questões que pedem para identificar o argumento principal ou classificar a falácia.\n- **Pontos-chave:**\n  - Tipos de arguments (autoridade, evidência, princípio).\n  - Estrutura: tese, desenvolvimento, conclusão.\n  - Reconhecimento de falácias comuns.\n\n## 3. Comunicação assertiva\n- **Resumo Teórico:** Uso de linguagem clara, objetiva, livre de ambiguidades e jargões desnecessários, adequada ao contexto corporativo e oficial.\n- **Dicas Cesgranrio:** Foco em questões que pedem reescrita de frases para torná-las mais diretas e sem ruídos.\n- **Pontos-chave:**\n  - Linguagem simples.\n  - Concisão (evitar prolixidade).\n  - Objetividade.\n\n## 4. Organização textual\n- **Resumo Teórico:** Estrutura em parágrafos que dividem introdução, desenvolvimento e conclusão.\n- **Dicas Cesgranrio:** Questões sobre a função de um parágrafo específico ou a ordem lógica dos períodos.\n- **Pontos-chave:**\n  - Tópico frasal.\n  - Desenvolvimento da ideia.\n  - Paragrafação adequada.\n\n## 5. Coesão e coerência\n- **Resumo Teórico:** Coesão é a ligação gramatical (pronomes, conjunções). Coerência é a lógica de sentido.\n- **Dicas Cesgranrio:** Troca de conjunções (causa, concessão, oposição) é muito cobrada!\n- **Pontos-chave:**\n  - Elementos anafóricos e catafóricos.\n  - Conjunções coordenativas e subordinativas.\n  - Manutenção do sentido.\n\n## 6. Tipologia textual\n- **Resumo Teórico:** Diferença entre narração (fatos), descrição (características), dissertação (argumentação/exposição) e injunção (ordens).\n- **Dicas Cesgranrio:** Identificação da tipologia predominante e secundária em textos híbridos.\n- **Pontos-chave:**\n  - Injunção: manuais, receitas.\n  - Exposição: informar sem opinar.\n  - Dissertação: defender ponto de vista.\n\n## 7. Ortografia oficial\n- **Resumo Teórico:** Uso correto de letras (s/z, x/ch, j/g) e formas variantes.\n- **Dicas Cesgranrio:** Uso do \"porquê\", mal/mau, onde/aonde, acerca de / a cerca de.\n- **Pontos-chave:**\n  - Regras do X e CH.\n  - Uso dos porquês.\n  - Palavras homônimas parônimas.\n\n## 8. Acentuação gráfica\n- **Resumo Teórico:** Regras baseadas na tonicidade: oxítonas, paroxítonas e proparoxítonas.\n- **Dicas Cesgranrio:** A banca foca nas exceções e regras do Novo Acordo (ditongos abertos e hiatos).\n- **Pontos-chave:**\n  - Todas proparoxítonas são acentuadas.\n  - Acentuação de oxítonas e paroxítonas.\n  - Regras dos hiatos (i e u tônicos).\n\n## 9. Crase\n- **Resumo Teórico:** Fusão da preposição 'a' com o artigo 'a' ou pronome demonstrativo.\n- **Dicas Cesgranrio:** Troque a palavra feminina por masculina; se virar \"ao\", tem crase.\n- **Pontos-chave:**\n  - Obrigatória: locuções femininas.\n  - Proibida: antes de verbos e palavras masculinas.\n  - Facultativa: pronomes possessivos femininos, nomes próprios femininos, até a.\n\n## 10. Sintaxe da oração e do período\n- **Resumo Teórico:** Análise dos termos essenciais (sujeito, predicado), integrantes e acessórios. Período simples e composto (coordenação e subordinação).\n- **Dicas Cesgranrio:** Identificação de sujeito (oculto, indeterminado, oracional) e função sintática do \"que\" e \"se\".\n- **Pontos-chave:**\n  - Tipos de sujeito.\n  - Vozes verbais.\n  - Orações subordinadas adjetivas e substantivas.\n\n## 11. Pontuação\n- **Resumo Teórico:** Uso de sinais de pontuação para organizar o raciocínio. A vírgula é o mais cobrado.\n- **Dicas Cesgranrio:** Nunca se separa sujeito do verbo, nem verbo do complemento com vírgula.\n- **Pontos-chave:**\n  - Vírgula em adjunto adverbial deslocado.\n  - Uso do travessão para isolar aposto.\n  - Ponto e vírgula em enumerações.\n\n## 12. Concordância nominal e verbal\n- **Resumo Teórico:** Ajuste de flexão entre termos. Verbal (verbo e sujeito) e Nominal (nome e determinantes).\n- **Dicas Cesgranrio:** Casos do verbo haver (impessoal) e fazer (tempo).\n- **Pontos-chave:**\n  - Verbo \"haver\" no sentido de existir = singular.\n  - Sujeito composto posposto.\n  - Concordância com expressões partitivas.\n\n## 13. Regência nominal e verbal\n- **Resumo Teórico:** Relação de dependência entre as palavras e seus complementos (com ou sem preposição).\n- **Dicas Cesgranrio:** Verbos clássicos: assistir, visar, preferir, aspirar.\n- **Pontos-chave:**\n  - Assistir (ver = a, ajudar = sem prep).\n  - Visar (almejar = a, mirar = sem prep).\n  - Preferir algo a outra coisa.\n\n## 14. Significação das palavras\n- **Resumo Teórico:** Sentido das palavras no contexto. Sinônimos, antônimos, parônimos (parecidos) e homônimos (iguais). Polissemia (vários sentidos).\n- **Dicas Cesgranrio:** Questões de reescrita pedindo sinônimos perfeitos no contexto.\n- **Pontos-chave:**\n  - Diferença parônimos/homônimos.\n  - Polissemia vs ambiguidade.\n  - Vocabulário erudito básico.\n\n## 15. Colocação pronominal\n- **Resumo Teórico:** Posição do pronome oblíquo átono em relação ao verbo: próclise (antes), mesóclise (meio), ênclise (depois).\n- **Dicas Cesgranrio:** Palavras atrativas (negativas, advérbios, pronomes relativos) exigem próclise.\n- **Pontos-chave:**\n  - Nunca começar frase com pronome oblíquo átono.\n  - Mesóclise só em futuro do presente/pretérito sem palavra atrativa.\n  - Principais atratores de próclise.\n\n## 16. Redação Oficial\n- **Resumo Teórico:** Normas do Manual de Redação da Presidência da República (3ª edição).\n- **Dicas Cesgranrio:** Padrão Ofício (extinção de memorando e aviso), pronomes de tratamento.\n- **Pontos-chave:**\n  - Atributos da redação oficial (impessoalidade, clareza, concisão).\n  - Vocativo e fecho corretos (Respeitosamente / Atenciosamente).\n  - Estrutura do Padrão Ofício.\n\n## 17. Novo Acordo Ortográfico\n- **Resumo Teórico:** Mudanças na acentuação e no uso do hífen.\n- **Dicas Cesgranrio:** Foco no fim do acento em ditongos abertos (ei, oi) nas paroxítonas (ex: ideia, jiboia).\n- **Pontos-chave:**\n  - Hífen com prefixos.\n  - Vogais iguais separam, vogais diferentes juntam.\n  - Fim do trema.\n\n## Material de Referência\n- **Livros:** Gramática para Concursos (Pestana)\n- **Sites:** QConcursos (filtre por Cesgranrio), YouTube (Canais de professores como Flávia Rita, Elias Santana)\n\n## Checklist de Revisão\n- [ ] Compreensão e interpretação de textos\n- [ ] Argumentação e persuasão\n- [ ] Comunicação assertiva\n- [ ] Organização textual\n- [ ] Coesão e coerência\n- [ ] Tipologia textual\n- [ ] Ortografia oficial\n- [ ] Acentuação gráfica\n- [ ] Crase\n- [ ] Sintaxe da oração e do período\n- [ ] Pontuação\n- [ ] Concordância nominal e verbal\n- [ ] Regência nominal e verbal\n- [ ] Significação das palavras\n- [ ] Colocação pronominal\n- [ ] Redação Oficial\n- [ ] Novo Acordo Ortográfico\n"}, {"id": "04-geografia-historia-mt", "title": "🗺️ Geografia e História de MT", "category": "Conhecimentos Gerais", "fileName": "04 - Geografia e História de MT.md", "content": "---\ntags: [geografia, historia, mato-grosso, 10-questoes]\n---\n# 🗺️ Geografia e História Política e Econômica de MT (10 questões | 10 pontos)\n\n> [!IMPORTANT]\n> Você não pode zerar esta disciplina! Por ser matéria regional, muitos candidatos têm dificuldade. Faça a diferença aqui!\n\n## PARTE 1: GEOGRAFIA DE MT\n\n### 1. Produção do espaço regional\n- **Resumo Teórico:** Formação ligada aos ciclos econômicos (mineração, borracha, pecuária) culminando na moderna expansão agropecuária e consolidação da fronteira agrícola.\n- **Dicas Cesgranrio:** Relacione a infraestrutura de transportes (BR-163) com o escoamento da soja.\n- **Pontos-chave:**\n  - Marcha para o Oeste (década de 1940).\n  - Expansão agrícola a partir dos anos 70/80 (soja).\n  - Agronegócio como motor econômico e suas dinâmicas socioespaciais.\n\n### 2. Aspectos naturais\n- **Resumo Teórico:** Clima tropical continental (duas estações bem definidas). Relevo diversificado. MT é único por possuir três biomas.\n- **Dicas Cesgranrio:** Localize os biomas no mapa estadual (Norte: Amazônia, Centro/Sul/Leste: Cerrado, Sudoeste: Pantanal).\n- **Pontos-chave:**\n  - **Clima:** Tropical e Equatorial (no norte).\n  - **Relevo:** Chapadas (Guimarães, Parecis), Planícies (Pantanal) e Depressões.\n  - **Biomas:** Amazônia (54%), Cerrado (39%), Pantanal (7%).\n  - **Hidrografia:** Bacias Amazônica, Platina (Paraguai) e Tocantins-Araguaia.\n\n### 3. Políticas de gestão ambiental\n- **Resumo Teórico:** Foco no monitoramento de desmatamento, queimadas, e a criação/gestão de Unidades de Conservação e terras indígenas pela SEMA e IBAMA.\n- **Dicas Cesgranrio:** Tema muito provável para redação/questões devido à atual crise climática e incêndios no Pantanal/Cerrado.\n- **Pontos-chave:**\n  - SEMA-MT e CAR (Cadastro Ambiental Rural).\n  - Unidades de Conservação Estaduais.\n  - Conflitos ambientais: garimpo ilegal, desmatamento para pasto.\n\n### 4. Características econômicas\n- **Resumo Teórico:** MT é a maior potência do agronegócio brasileiro, líder nacional na produção de soja, algodão, milho e no rebanho bovino.\n- **Dicas Cesgranrio:** Agronegócio gera alta concentração de renda e foca em commodities para exportação.\n- **Pontos-chave:**\n  - Soja e Algodão (líder nacional).\n  - Rebanho Bovino comercial (maior do país).\n  - Industrialização focada em agroindústria (esmagamento de soja, frigoríficos, etanol de milho).\n\n### 5. Geografia da população\n- **Resumo Teórico:** População formada por intensa migração, especialmente sulistas (gaúchos/paranaenses) a partir dos anos 1970 para áreas de fronteira agrícola.\n- **Dicas Cesgranrio:** Compreenda o choque cultural e a miscigenação (cuiabano tradicional vs. migrante sulista).\n- **Pontos-chave:**\n  - Alta taxa de urbanização.\n  - Desigualdade na distribuição de renda.\n  - Migração de sulistas impulsionada por políticas do governo militar.\n\n### 6. Processo de urbanização\n- **Resumo Teórico:** Crescimento de cidades ao longo das rodovias (eixos) impulsionado pelo agronegócio.\n- **Dicas Cesgranrio:** Diferença entre a capital administrativa (Cuiabá) e os \"polos do agro\" (Sinop, Rondonópolis, Sorriso).\n- **Pontos-chave:**\n  - Cuiabá e Várzea Grande (Região Metropolitana).\n  - Rondonópolis (hub logístico/ferroviário no sul).\n  - Sinop e Sorriso (polos da BR-163 e agronegócio no norte).\n\n### 7. Dinâmica do espaço agrário\n- **Resumo Teórico:** Predominância do latifúndio monocultor, alta mecanização e tecnologia, contrastando com a agricultura familiar e assentamentos.\n- **Dicas Cesgranrio:** O modelo agroexportador e seus impactos sociais (conflitos fundiários, expropriação).\n- **Pontos-chave:**\n  - Concentração fundiária.\n  - Expansão rápida da fronteira agrícola sobre o cerrado e borda amazônica.\n  - Tensão entre modernização e conflito agrário.\n\n## PARTE 2: HISTÓRIA DE MT\n\n### 1. Povos indígenas antes da colonização\n- **Resumo Teórico:** Rica diversidade étnica antes da chegada europeia. Grupos como Bororo, Xavante, Paresi e Kayapó dominavam diferentes regiões.\n- **Dicas Cesgranrio:** Os indígenas não foram atores passivos; eles resistiram, negociaram e sofreram intenso etnocídio.\n- **Pontos-chave:**\n  - Diversidade de nações indígenas.\n  - Ocupação pré-colonial.\n  - Impacto devastador do contato europeu.\n\n### 2. Missões e catequese (séc. XVII)\n- **Resumo Teórico:** Primeiras incursões espanholas (jesuítas) na região do Itatim, catequizando indígenas para fixação.\n- **Dicas Cesgranrio:** Os jesuítas sofreram ataques de bandeirantes paulistas que buscavam escravizar os nativos.\n- **Pontos-chave:**\n  - Missões jesuíticas (espanholas).\n  - Foco na conversão.\n  - Conflito com bandeirantes.\n\n### 3. Bandeiras (séc. XVIII)\n- **Resumo Teórico:** Bandeiras de preamento (caça ao índio) e prospectoras (busca por metais preciosos) vindas de São Paulo.\n- **Dicas Cesgranrio:** Bandeiras paulistas foram as responsáveis pela expansão das fronteiras luso-brasileiras além do Tratado de Tordesilhas.\n- **Pontos-chave:**\n  - Antônio Pires de Campos e Pascoal Moreira Cabral.\n  - Escravização de indígenas.\n  - Descoberta das primeiras lavras de ouro.\n\n### 4. Cuiabá - de Arraial a Vila\n- **Resumo Teórico:** Fundação oficial em 1719 após a descoberta do ouro nas margens do Rio Coxipó por Pascoal Moreira Cabral.\n- **Dicas Cesgranrio:** Em 1727, elevou-se a Vila Real do Senhor Bom Jesus de Cuiabá. A elite \"Sorocabana\" controlava o comércio e abastecimento (Monções).\n- **Pontos-chave:**\n  - Ata de Fundação (1719).\n  - Expedições fluviais (Monções) ligando SP a Cuiabá.\n  - Sorocabanos (comerciantes influentes).\n\n### 5. Vila Bela da Santíssima Trindade\n- **Resumo Teórico:** Fundada em 1752 no Vale do Guaporé por Gomes Freire de Andrade. Foi a primeira capital da Capitania de MT.\n- **Dicas Cesgranrio:** Criada por motivos geopolíticos para garantir a posse de Portugal contra as pretensões espanholas na fronteira oeste.\n- **Pontos-chave:**\n  - Primeira Capital.\n  - Defesa militar e controle da fronteira (Tratado de Madri - 1750).\n  - Decadência precoce devido à distância e surtos de malária.\n\n### 6. Mineração\n- **Resumo Teórico:** Base econômica do séc. XVIII. Foco no ouro de aluvião.\n- **Dicas Cesgranrio:** Mão de obra majoritariamente de africanos escravizados, em condições severas.\n- **Pontos-chave:**\n  - Ciclo do Ouro.\n  - Exploração de aluvião (rápido esgotamento).\n  - Intensa utilização de escravizados africanos.\n\n### 7. Decadência da mineração → Pecuária\n- **Resumo Teórico:** Com o fim do ouro (início do séc. XIX), MT passa por isolamento econômico, substituindo a mineração pela pecuária extensiva, poaia e engenhos de açúcar.\n- **Dicas Cesgranrio:** Transição para economia de subsistência e isolamento geográfico duradouro.\n- **Pontos-chave:**\n  - Fim do ciclo aurífero.\n  - Pecuária extensiva na região pantaneira.\n  - Extrativismo (poaia/ipecacuanha e borracha depois).\n\n### 8. A Rusga (1834)\n- **Resumo Teórico:** Revolta de caráter nativista em Cuiabá (período regencial) onde \"brasileiros\" (nativistas) massacraram portugueses (adotivos).\n- **Dicas Cesgranrio:** Refletia o sentimento antilusitano e a crise econômica/política do pós-Independência.\n- **Pontos-chave:**\n  - 1834 (Período Regencial).\n  - Brasileiros x Portugueses.\n  - Contexto de crise econômica e insatisfação militar.\n\n### 9. Guerra da Tríplice Aliança (1864-1870)\n- **Resumo Teórico:** Guerra do Paraguai. MT foi a primeira província invadida por Solano López em 1864, via Rio Paraguai.\n- **Dicas Cesgranrio:** A \"Retirada da Laguna\" foi a trágica tentativa das tropas brasileiras (vindas de MG/RJ) de retomar territórios invadidos em MT (atual MS).\n- **Pontos-chave:**\n  - Invasão paraguaia em Corumbá e forte de Coimbra.\n  - Isolamento de Cuiabá.\n  - Abertura da navegação do Rio Paraguai no pós-guerra.\n\n### 10. Estado Novo e Marcha para o Oeste\n- **Resumo Teórico:** Política de Getúlio Vargas nos anos 1940 para integrar o Centro-Oeste e Amazônia. Fundação de colônias agrícolas e Cidades (Goiânia). Expedição Roncador-Xingu.\n- **Dicas Cesgranrio:** Fundação da Colônia Agrícola de Dourados e a Fundação Brasil Central.\n- **Pontos-chave:**\n  - Integração nacional de Vargas.\n  - Colonização dirigida pelo Estado.\n  - Expedição Roncador-Xingu (Irmãos Villas-Bôas).\n\n### 11. Ditadura e Divisão do Estado\n- **Resumo Teórico:** Ditadura Militar incentiva a colonização privada (projetos da SUDAM, rodovias BR-163 e BR-364). Em 1977, Lei Complementar nº 31 divide MT, criando Mato Grosso do Sul (efetivado em 1979).\n- **Dicas Cesgranrio:** O norte (atual MT) permaneceu mais focado na integração com a Amazônia, enquanto o sul (MS) estava mais ligado a SP/PR.\n- **Pontos-chave:**\n  - Incentivos fiscais e colonizadoras privadas (Sinop, etc).\n  - Divisão geopolítica em 1977 (Ernesto Geisel).\n  - Início do boom do agronegócio.\n\n### 12. Tensões no campo\n- **Resumo Teórico:** Conflitos gerados pela rápida expansão da fronteira, grilagem de terras, posseiros x fazendeiros, indígenas, e movimentos camponeses (MST).\n- **Dicas Cesgranrio:** O \"Eldorado\" mato-grossense atraiu muitos sem-terra e causou violentos conflitos rurais nas décadas de 80, 90 e 2000.\n- **Pontos-chave:**\n  - Grilagem e sobreposição de títulos de terra.\n  - Massacre de trabalhadores e lideranças rurais.\n  - Disputas envolvendo terras indígenas e Unidades de Conservação.\n\n## Dados Importantes para Memorizar\n\n| Informação | Dado |\n| :--- | :--- |\n| **Capital** | Cuiabá |\n| **Biomas** | Amazônia, Cerrado e Pantanal |\n| **Área Territorial** | ~ 903.000 km² (3º maior do BR) |\n| **População (2022)** | ~ 3,6 milhões |\n| **Principais Rios** | Paraguai, Cuiabá, Araguaia, Teles Pires, Juruena |\n| **Economia** | Agropecuária (Soja, Algodão, Milho, Bovinos) |\n\n## Checklist de Revisão\n- [ ] Produção do espaço regional\n- [ ] Aspectos naturais (clima, relevo, vegetação, hidrografia)\n- [ ] Políticas de gestão ambiental e SEMA\n- [ ] Características econômicas e Agronegócio\n- [ ] Geografia da população e demografia\n- [ ] Processo de urbanização\n- [ ] Dinâmica do espaço agrário\n- [ ] Povos indígenas antes da colonização\n- [ ] Missões e catequese (séc. XVII)\n- [ ] Bandeiras e expansão (séc. XVIII)\n- [ ] Cuiabá - fundação e ciclo do ouro\n- [ ] Vila Bela da Santíssima Trindade\n- [ ] Mineração (ouro e escravidão)\n- [ ] Decadência da mineração e Pecuária\n- [ ] A Rusga (1834)\n- [ ] Guerra do Paraguai (1864-1870) e Retirada da Laguna\n- [ ] Estado Novo, Vargas e Marcha para o Oeste\n- [ ] Ditadura, Projetos de Colonização e Divisão do Estado (1977)\n- [ ] Tensões no campo e conflitos fundiários\n"}, {"id": "05-etica-filosofia", "title": "⚖️ Ética, Filosofia e Legislação MT", "category": "Conhecimentos Gerais", "fileName": "05 - Ética, Filosofia, Atualidades e Legislação.md", "content": "---\ntags: [etica, filosofia, atualidades, legislacao, 5-questoes]\n---\n# ⚖️ Ética, Filosofia, Atualidades e Legislação Específica (5 questões | 5 pontos)\n\n## ÉTICA E FILOSOFIA\n\n### 1. Filosofia como busca racional\n- **Resumo:** A filosofia surge na Grécia Antiga como transição do pensamento mítico (mito) para o pensamento racional (logos).\n- **Foco:** Busca por respostas através da razão, questionamento e argumentação crítica.\n- **Pontos-chave:** Reflexão radical, rigorosa e de conjunto.\n\n### 2. Tipos de conhecimento\n- **Empírico (Senso Comum):** Baseado na experiência diária, assistemático, acrítico.\n- **Científico:** Metódico, sistemático, testável, objetivo.\n- **Filosófico:** Racional, questionador, busca os fundamentos e a essência, não precisa de validação laboratorial, mas de consistência lógica.\n- **Teológico/Religioso:** Baseado na fé e dogmas revelados.\n\n### 3. Correntes epistemológicas\n- **Racionalismo (Descartes):** A razão é a única fonte do conhecimento verdadeiro (ideias inatas). Penso, logo existo.\n- **Empirismo (Locke, Hume):** Todo conhecimento provém da experiência sensorial. A mente é uma \"tábula rasa\".\n- **Criticismo (Kant):** Síntese. O conhecimento começa com a experiência, mas não deriva todo dela; necessita das estruturas a priori da razão.\n\n### 4. Desafios contemporâneos\n- **Pós-verdade:** Fatos objetivos têm menos influência do que apelos à emoção e a crenças pessoais.\n- **Fake News:** Desinformação disseminada em rede, afetando a democracia e o debate público.\n- **Inteligência Artificial:** Dilemas éticos sobre viés algorítmico, substituição de empregos e privacidade.\n\n### 5. Assédio moral e sexual\n- **Assédio Moral:** Conduta abusiva, frequente e reiterada (palavras, atos, gestos) que atenta contra a dignidade ou integridade psíquica da pessoa (humilhações no trabalho).\n- **Assédio Sexual:** Conduta de natureza sexual, não desejada, com o intuito de obter vantagem ou favorecimento, prevalecendo-se da condição de superior hierárquico.\n- **Medidas:** Denúncias anônimas, corregedorias, canais de ética, campanhas de conscientização.\n\n### 6. Atitudes éticas\n- **Ética vs Moral:** Moral é o conjunto de regras (prática); Ética é a reflexão sobre essas regras (teoria).\n- **Serviço Público:** Pautado na legalidade, impessoalidade, moralidade, publicidade e eficiência. Respeito ao cidadão, probidade, honestidade e virtude.\n\n## ATUALIDADES\n\n> [!TIP]\n> **Dicas de Estudo para Atualidades:** Acompanhe noticiários, podcasts e resumos semanais de cursinhos. Foque em eventos com impacto nacional ou global sustentado, evitando notícias passageiras.\n\n**Temas Quentes (2025/2026):**\n- **Agenda Ambiental:** O papel do Brasil (e de MT) nas COPs, combate ao desmatamento na Amazônia e Pantanal, crise hídrica e ondas de calor extremos.\n- **Queimadas em MT:** Impactos no Pantanal, atuação da SEMA/Ibama, políticas de mitigação e fundo Amazônia.\n- **Economia Brasileira:** Reforma tributária, inflação, transição energética (hidrogênio verde, energia solar/eólica).\n- **Geopolítica:** Conflitos globais em andamento, reorganização de blocos econômicos (BRICS).\n\n## LEGISLAÇÃO ESPECÍFICA\n\n### 1. LC nº 112/2002 - Código de Ética do Servidor de MT\n- **Princípios:** Legalidade, Impessoalidade, Moralidade, Publicidade, Eficiência, Razoabilidade e Proporcionalidade.\n- **Deveres:** Zelar pelo patrimônio, urbanidade, assiduidade, sigilo profissional.\n- **Proibições:** Receber propina, usar o cargo para favorecimento, embriaguez habitual no serviço.\n- **Comissões de Ética:** Objetivo de orientar e aconselhar. A pena aplicável por essa comissão é a de **CENSURA** (decisão fundamentada e escrita).\n\n### 2. LC nº 04/1990 - Estatuto dos Servidores de MT\n- **Provimento:** Nomeação, Promoção, Readaptação, Reversão, Aproveitamento, Reintegração, Recondução.\n- **Estágio Probatório:** Avaliação de aptidão e capacidade para o cargo.\n- **Penalidades Disciplinares:** Advertência, Suspensão, Demissão, Cassação de aposentadoria, Destituição de cargo em comissão.\n- **Demissão:** Aplicada em casos de crime contra a administração pública, abandono de cargo (mais de 30 dias consecutivos), inassiduidade habitual (mais de 60 dias interpolados em 12 meses), improbidade administrativa.\n\n### 3. LC nº 38/1995 - Código Estadual do Meio Ambiente de MT\n- **Foco Central:** Política ambiental estadual de proteção, conservação e melhoria do meio ambiente.\n- **Competências da SEMA:** Fiscalizar, monitorar, licenciar e multar atividades poluidoras.\n- **Licenciamento Ambiental:** Instrumento da Política Estadual (Licença Prévia, de Instalação e de Operação - LP, LI, LO). É exigível para construção, instalação, ampliação e funcionamento de atividades poluidoras.\n- **Infrações:** A responsabilidade administrativa ambiental é autônoma (independe de dolo ou culpa, mas exige nexo causal).\n\n## Checklist de Revisão\n- [ ] Filosofia como busca racional e Tipos de conhecimento\n- [ ] Correntes epistemológicas (Racionalismo, Empirismo, Criticismo)\n- [ ] Pós-verdade, fake news, impacto da IA\n- [ ] Assédio moral e sexual no trabalho\n- [ ] Atitudes éticas no serviço público\n- [ ] Revisão de Atualidades (Meio ambiente, economia, MT)\n- [ ] LC nº 112/2002 (Código de Ética de MT - Focar na CENSURA)\n- [ ] LC nº 04/1990 (Estatuto - Provimento e Demissão/Abandono)\n- [ ] LC nº 38/1995 (Código Ambiental - Licenciamento LP, LI, LO)\n"}, {"id": "06-transversal-gestao", "title": "🏛️ Gestão Pública e Direitos Humanos", "category": "Conteúdos Transversais", "fileName": "06 - Conteúdos Transversais - Gestão Pública e Direitos Humanos.md", "content": "---\ntags:\n  - gestao-publica\n  - politicas-publicas\n  - direitos-humanos\n  - indigenas\n  - quilombolas\n  - transversal\n---\n# 🏛️ Conteúdos Transversais — Gestão Pública e Direitos Humanos\n\n> [!NOTE]\n> Este conteúdo é comum aos perfis de Analista de Desenvolvimento Econômico e Social (Administração, Psicologia, Serviço Social, Sociologia, etc.) e compõe parte das 40 questões da Prova Específica.\n\n---\n\n## 1. Administração e Gestão Pública\n\n### 1.1 Funções da Administração\n* **Planejamento:** Definição de objetivos, metas e planos estratégicos, táticos e operacionais.\n* **Organização:** Estruturação de recursos, divisão do trabalho e atribuição de responsabilidades.\n* **Direção:** Liderança, comunicação, coordenação e motivação das equipes.\n* **Controle:** Monitoramento, medição de desempenho em relação aos padrões e correção de desvios.\n\n### 1.2 Princípios Constitucionais da Administração Pública (Art. 37 da CF/88 - LIMPE)\n* **Legalidade:** O administrador só pode fazer o que a lei expressamente autoriza.\n* **Impessoalidade:** Tratamento isonômico sem favoritismos ou perseguições; finalidade pública.\n* **Moralidade:** Atuação ética, leal e de boa-fé.\n* **Publicidade:** Transparência dos atos e decisões (regra geral, ressalvado sigilo imprescindível).\n* **Eficiência:** Obtenção dos melhores resultados com o menor dispêndio de recursos públicos.\n\n### 1.3 Gestão de Pessoas no Setor Público\n* Desafios da gestão pública: estabilidade funcional, ingresso por concurso público, limites da Lei de Responsabilidade Fiscal (LRF) e promoção por mérito/antiguidade.\n* Liderança e motivação no serviço público: valorização do propósito público, programas de qualidade de vida e desenvolvimento contínuo de competências.\n\n---\n\n## 2. Ciclo de Políticas Públicas e Gestão Social\n\n### 2.1 As Fases do Ciclo de Políticas Públicas\n1. **Formação da Agenda (Agenda Setting):** Identificação de um problema social como prioridade pública de intervenção governamental.\n2. **Formulação de Políticas:** Elaboração de alternativas, metas e desenhos de programas para solucionar o problema.\n3. **Tomada de Decisão:** Escolha da alternativa mais adequada (técnica, política e economicamente).\n4. **Implementação:** Execução prática das ações, mobilização de orçamento, servidores e infraestrutura.\n5. **Monitoramento e Avaliação:**\n   - *Monitoramento:* Acompanhamento contínuo da execução dos processos.\n   - *Avaliação de Impacto:* Análise dos efeitos reais gerados na população-alvo (indicadores de eficiência, eficácia e efetividade).\n\n### 2.2 Participação Social e Controle Democrático\n* Mecanismos de participação: audiências públicas, conselhos de políticas públicas (CONSEMA em MT), conferências e ouvidorias públicas.\n\n---\n\n## 3. Direitos Humanos e Comunidades Tradicionais\n\n### 3.1 Marcos Normativos Internacionais\n* **Declaração Universal dos Direitos Humanos (DUDH, 1948):** Dignidade intrínseca, universalidade, inalienabilidade e indivisibilidade dos direitos fundamentais.\n* **Convenção 169 da OIT (Organização Internacional do Trabalho):** Direito à **Consulta Prévia, Livre e Informada** aos povos indígenas e comunidades tradicionais sobre quaisquer medidas administrativas ou legislativas que possam afetá-los diretamente.\n\n### 3.2 Povos Indígenas no Brasil e em Mato Grosso\n* Povos originários em MT: Xavante, Bororo, Paresi, Kayapó, Rikbaktsa, Cinta-Larga, Enawenê-Nawê, entre outros.\n* **Artigos 231 e 232 da CF/88:** Reconhecimento da organização social, costumes, línguas, crenças e os direitos originários sobre as terras que tradicionalmente ocupam.\n* Desafios contemporâneos: demarcação territorial, desmatamento ilegal, invasões garimpeiras, impactos da expansão da fronteira agropecuária e acesso à saúde e educação diferenciada.\n\n### 3.3 Comunidades Quilombolas\n* Comunidades remanescentes de quilombos: grupos com trajetória histórica própria, ancestralidade negra relacionada à resistência à escravidão e relação territorial específica.\n* Licenciamento ambiental de empreendimentos com impacto em comunidades quilombolas exige estudos de componente quilombola e anuência da Fundação Cultural Palmares.\n\n---\n\n### 📝 Checklist de Revisão\n- [ ] Memorizar os 5 princípios constitucionais do LIMPE (Art. 37, CF/88)\n- [ ] Conhecer as etapas do Ciclo de Políticas Públicas (Agenda ➔ Formulação ➔ Decisão ➔ Implementação ➔ Avaliação)\n- [ ] Lembrar a obrigatoriedade da Consulta Prévia da Convenção 169 da OIT\n- [ ] Conhecer as principais etnias indígenas de Mato Grosso e seus direitos constitucionais\n"}, {"id": "07-transversal-ambiental", "title": "🌿 Meio Ambiente, Clima e CAR/PRA", "category": "Conteúdos Transversais", "fileName": "07 - Conteúdos Transversais - Meio Ambiente e Clima.md", "content": "---\ntags:\n  - meio-ambiente\n  - clima\n  - legislacao-ambiental\n  - transversal\n---\n# 🌿 Conteúdos Transversais — Meio Ambiente e Sustentabilidade\n\n> [!NOTE]\n> Conteúdo transversal exigido para todos os cargos de nível superior da SEMA/MT (exceto TI).\n\n---\n\n## 1. Legislação Ambiental Fundamental\n\n### 1.1 Política Nacional do Meio Ambiente (Lei nº 6.938/1981)\n* **Objetivo:** Compatibilizar o desenvolvimento socioeconômico com a preservação da qualidade ambiental e do equilíbrio ecológico.\n* **Estrutura do SISNAMA (Sistema Nacional do Meio Ambiente):**\n  - *Órgão Superior:* Conselho de Governo.\n  - *Órgão Consultivo e Deliberativo:* CONAMA.\n  - *Órgão Central:* Ministério do Meio Ambiente e Mudança do Clima (MMA).\n  - *Órgão Executores:* IBAMA e Instituto Chico Mendes (ICMBio).\n  - *Órgãos Seccionais:* Órgãos estaduais de meio ambiente (**SEMA/MT**).\n  - *Órgãos Locais:* Órgãos municipais de meio ambiente.\n* **Princípio da Responsabilidade Objetiva:** O poluidor responde independentemente da existência de culpa pelos danos causados ao meio ambiente (Teoria do Risco Integral).\n\n### 1.2 Código Florestal Brasileiro (Lei nº 12.651/2012)\n* **APP (Área de Preservação Permanente):** Área protegida, coberta ou não por vegetação nativa, com a função ambiental de preservar os recursos hídricos, a paisagem, a estabilidade geológica e a biodiversidade (margens de rios, encostas, topos de morro).\n* **Reserva Legal (RL):** Percentual da propriedade rural que deve ser mantido com cobertura vegetal nativa para uso econômico sustentável.\n  - *Na Amazônia Legal:* 80% em imóveis situados em área de floresta; 35% em área de cerrado; 20% em campos gerais.\n  - *Fora da Amazônia Legal:* 20% em todas as formas de vegetação.\n* **CAR (Cadastro Ambiental Rural):** Registro público eletrônico de âmbito nacional, obrigatório para todos os imóveis rurais, com a finalidade de integrar as informações ambientais das propriedades.\n* **PRA (Programa de Regularização Ambiental):** Instrumento para adequação e recuperação de passivos ambientais em propriedades rurais.\n\n### 1.3 Recursos Hídricos e Mudanças Climáticas\n* **Lei das Águas (Lei Federal nº 9.433/1997) e Lei Estadual nº 11.088/2020 (MT):**\n  - A água é um bem de domínio público e um recurso natural limitado, dotado de valor econômico.\n  - A bacia hidrográfica é a unidade territorial básica para implementação da política.\n  - Instrumentos: Planos de Recursos Hídricos, Enquadramento dos corpos d'água, Outorga de direito de uso, Cobrança pelo uso da água e Sistema de Informações.\n* **Política Nacional sobre Mudança do Clima (Lei nº 12.187/2009) e LC Estadual nº 582/2017 (MT):**\n  - Instrumentos de mitigação de emissões de gases de efeito estufa (GEE) e adaptação climática.\n  - Proteção dos biomas mato-grossenses (Cerrado, Amazônia e Pantanal) contra o estresse hídrico e queimadas florestais.\n\n### 1.4 Novas Legislações Ambientais no Edital\n* **Lei Federal nº 15.190/2025:** Novo marco regulatório geral do Licenciamento Ambiental no Brasil.\n* **Lei Federal nº 14.944/2024:** Política Nacional de Manejo Integrado do Fogo.\n* **LC Estadual nº 592/2017 e Dec. 1.031/2017 (MT):** Regulamentação do SIMCAR (Sistema Mato-grossense de Cadastro Ambiental Rural).\n\n---\n\n### 📝 Checklist de Revisão\n- [ ] Memorizar as instâncias do SISNAMA (CONAMA, MMA, IBAMA/ICMBio, SEMA)\n- [ ] Saber os percentuais de Reserva Legal na Amazônia Legal (80% floresta, 35% cerrado, 20% campos)\n- [ ] Compreender os fundamentos da Política de Recursos Hídricos (água como bem público e valor econômico)\n- [ ] Conhecer o papel do CAR e do SIMCAR na regularização ambiental em MT\n"}, {"id": "08-etica-cfp", "title": "⚖️ Ética Profissional e Resoluções CFP", "category": "Psicologia Específica", "fileName": "08 - Ética Profissional e Resoluções do CFP.md", "content": "---\ntags:\n  - etica-psicologia\n  - cfp\n  - resolucoes\n  - documentos-psicologicos\n  - satepsi\n---\n# ⚖️ Ética Profissional e Resoluções do CFP\n\n> [!IMPORTANT]\n> O Código de Ética Profissional do Psicólogo e as Resoluções do CFP formam a espinha dorsal de qualquer concurso para Psicólogo da Cesgranrio. Conhecer a literalidade das resoluções é indispensável.\n\n---\n\n## 1. Código de Ética Profissional do Psicólogo (Resolução CFP nº 10/2005)\n\n### 1.1 Princípios Fundamentais\n1. O psicólogo baseará seu trabalho no respeito e na promoção da liberdade, da dignidade, da igualdade e da integridade do ser humano, apoiado nos valores da Declaração Universal dos Direitos Humanos.\n2. Trabalhará visando a promover a saúde e a qualidade de vida das pessoas e das coletividades e contribuirá para a eliminação de quaisquer formas de negligência, discriminação, exploração, violência, crueldade e opressão.\n3. Atuará com responsabilidade social, analisando crítica e historicamente a realidade política, econômica, social e cultural.\n4. Contribuirá para o aprimoramento e a disseminação da Psicologia.\n\n### 1.2 Deveres Fundamentais (Art. 1º)\n* Conhecer, divulgar, cumprir e fazer cumprir o Código de Ética;\n* Assumir responsabilidades profissionais somente para atividades para as quais esteja capacitado pessoal, teórica e tecnicamente;\n* Prestar serviços em situações de calamidade pública ou de emergência, sem visar a benefício pessoal;\n* Informar, a quem de direito, os resultados decorrentes da prestação de serviços psicológicos, transmitindo somente o que for necessário para a tomada de decisão;\n* Sugerir serviços de outros psicólogos sempre que, por motivos justificáveis, não puder continuar o atendimento.\n\n### 1.3 É Vedado ao Psicólogo (Art. 2º)\n* Praticar ou ser conivente com quaisquer atos que caracterizem negligência, discriminação, exploração, violência, crueldade ou opressão;\n* Induzir a convicções políticas, filosóficas, morais, ideológicas, religiosas ou a qualquer tipo de preconceito;\n* Utilizar ou favorecer o uso de conhecimentos e de técnicas da Psicologia para exercer tortura, coação ou atos de crueldade;\n* Ser perito, avaliador ou auditor em situações nas quais seus vínculos pessoais ou profissionais possam afetar a isenção do trabalho;\n* Emitir documentos sem fundamentação técnico-científica;\n* Interferir na validade de instrumentos psicológicos (divulgar testes ou gabaritos);\n* **Sigilo Profissional (Art. 9º):** O psicólogo guardará sigilo sobre os fatos de que tenha conhecimento em decorrência do exercício profissional. Quando a quebra de sigilo for necessária (art. 10), o psicólogo deverá prestar **apenas as informações estritamente necessárias**.\n\n---\n\n## 2. Elaboração de Documentos Escritos (Resolução CFP nº 06/2019)\n\nA resolução regulamenta e padroniza a produção de documentos psicológicos escritos:\n\n### 2.1 Modalidades de Documentos\n1. **Declaração:** Documento conciso que visa a informar a ocorrência de fatos ou situações pontuais (ex.: comparecimento do usuário, horários de atendimento, acompanhamento). **Não deve conter diagnóstico, sintomas ou estados psicológicos**.\n2. **Atestado Psicológico:** Certifica uma determinada situação ou estado psicológico a partir de uma avaliação realizada. Pode atestar aptidão ou inaptidão para atividades específicas, afastamento do trabalho ou justificar faltas.\n3. **Relatório Psicológico:** Comunica a atuação profissional em um determinado contexto. Estrutura:\n   - Identificação;\n   - Descrição da Demanda;\n   - Procedimento;\n   - Análise;\n   - Conclusão.\n4. **Laudo Psicológico:** Resultado de um processo formal de **Avaliação Psicológica**. Estrutura:\n   - Identificação;\n   - Descrição da Demanda;\n   - Procedimento (com técnicas, instrumentos e testes utilizados);\n   - Análise (fundamentação teórica rigorosa correlacionando a demanda aos resultados);\n   - Conclusão (com encaminhamentos e parecer final).\n5. **Parecer Psicológico:** Documento técnico fundamentado emitido em resposta a uma consulta ou questionamento técnico formulado por terceiros (questão-problema). Não decorre de avaliação direta do sujeito, mas de análise documental e conceitual. Estrutura:\n   - Identificação;\n   - Ementa;\n   - Exposição de Motivos;\n   - Análise;\n   - Conclusão.\n\n### 2.2 Guarda de Documentos\n* Toda documentação psicológica deve ser arquivada em local seguro pelo período mínimo de **5 (cinco) anos**.\n\n---\n\n## 3. Resoluções CFP Fundamentais do Edital\n\n* **Resolução CFP nº 31/2022 (Diretrizes de Avaliação Psicológica e SATEPSI):**\n  - Define avaliação psicológica como um processo estruturado de investigação de fenômenos psicológicos.\n  - Regula o **SATEPSI** (Sistema de Avaliação de Testes Psicológicos): os psicólogos só podem utilizar testes psicológicos com parecer favorável do CFP.\n* **Resolução CFP nº 08/2025 (Avaliação Psicológica em Concursos Públicos):**\n  - Exige previsão em lei formal para realização de exame psicotécnico;\n  - Critérios de avaliação puramente objetivos, perfil profissiográfico pré-definido e direito à entrevista de devolução e recurso.\n* **Resolução CFP nº 14/2023 (Avaliação de Riscos Psicossociais no Trabalho):**\n  - Estabelece parâmetros técnicos para a atuação de psicólogos na identificação, avaliação e intervenção sobre riscos psicossociais no ambiente de trabalho (articulada com a NR-1).\n* **Resolução CFP nº 09/2024 (Atuação mediada por TDICs):**\n  - Regulamenta serviços psicológicos prestados por meios tecnológicos (psicoterapia online, consultoria remota, triagens). Exige cadastro no e-Psi e ambiente digital com segurança e sigilo.\n* **Resoluções de Direitos Humanos:**\n  - *Resolução CFP nº 01/1999:* Proíbe expressamente qualquer ação que favoreça a patologização de comportamentos ou práticas homoeróticas (\"cura gay\").\n  - *Resolução CFP nº 18/2002:* Veda práticas que reforcem preconceito racial e determina atuação antirracista.\n  - *Resolução CFP nº 08/2020:* Diretrizes profissionais em relação às violências de gênero.\n\n---\n\n### 📝 Checklist de Revisão\n- [ ] Saber quais informações podem e NÃO podem constar em uma Declaração Psicológica\n- [ ] Conhecer as partes obrigatórias do Laudo Psicológico e do Parecer Psicológico\n- [ ] Memorizar o prazo mínimo de guarda de documentos psicológicos (5 anos)\n- [ ] Entender as exigências para avaliação de riscos psicossociais no trabalho (Res. 14/2023)\n- [ ] Dominar as regras de quebra de sigilo profissional (Art. 9º e 10 do Código de Ética)\n"}, {"id": "09-pot-gestao", "title": "🏢 Psicologia Organizacional e Gestão", "category": "Psicologia Específica", "fileName": "09 - Psicologia Organizacional e Gestão de Pessoas.md", "content": "---\ntags:\n  - psicologia-organizacional\n  - gestao-de-pessoas\n  - competencias\n  - desempenho\n  - conflitos\n---\n# 🏢 Psicologia Organizacional e Gestão Estratégica de Pessoas\n\n---\n\n## 1. Gestão Estratégica de Pessoas e Mudança Organizacional\n\n### 1.1 Da Administração de Recursos Humanos à Gestão Estratégica\n* Transição histórica: De departamento de pessoal burocrático (foco em folha de pagamento e controle de ponto) para Gestão Estratégica de Pessoas (pessoas como parceiras estratégicas, agentes proativos de inovação e valor público).\n* **Gestão da Mudança (Kurt Lewin):**\n  1. *Descongelamento (Unfreezing):* Quebra de paradigmas, conscientização da necessidade de mudança e redução de resistências.\n  2. *Mudança / Movimento (Moving):* Implementação de novos comportamentos, processos e tecnologias.\n  3. *Recongelamento (Refreezing):* Consolidação, reforço e institucionalização das novas práticas na cultura organizacional.\n\n### 1.2 Gestão por Competências\n* **Conceito de Competência (Modelo CHA):**\n  - **Conhecimento (Saber):** Domínio teórico e conceitual.\n  - **Habilidade (Saber Fazer):** Capacidade prática de aplicar o conhecimento na execução de tarefas.\n  - **Atitude (Querer Fazer):** Postura proativa, engajamento e comportamento ético-afetivo.\n* **Competências Corporativas / Essenciais (Core Competences):** Diferenciais estratégicos da organização pública perante a sociedade.\n* **Mapeamento de Competências:** Identificação do gap (lacuna) entre as competências necessárias para o alcance dos objetivos institucionais e as competências atualmente disponíveis no órgão.\n\n---\n\n## 2. Gestão e Avaliação de Desempenho\n\n### 2.1 Finalidades da Avaliação de Desempenho no Setor Público\n* Avaliação de estágio probatório, progressão na carreira, identificação de necessidades de capacitação e realocação interna de servidores.\n\n### 2.2 Métodos de Avaliação de Desempenho\n* **Escalas Gráficas:** Avalia fatores previamente definidos em uma escala graduada (ótimo, bom, regular, ruim). *Desvantagem:* Suscetível a vícios e efeito halo.\n* **Escolha Forçada:** Blocos de frases descritivas onde o avaliador escolhe as que melhor representam o desempenho. Reduz subjetividade, mas não gera feedback rico.\n* **Incidentes Críticos:** Registro sistemático de comportamentos extremos altamente positivos ou negativos.\n* **Avaliação 360 Graus (Feedback Circular):**\n  - O servidor é avaliado por todas as pessoas com as quais interage profissionalmente: chefia imediata, colegas pares, subordinados, clientes internos/cidadãos e autoavaliação.\n  - Proporciona visão holística, mas exige maturidade cultural da organização.\n\n### 2.3 Vieses e Erros Comuns na Avaliação\n* **Efeito Halo / Horn:** Generalizar uma característica positiva (halo) ou negativa (horn) para toda a avaliação do servidor.\n* **Tendência Central:** O avaliador evita notas extremas e avalia todos na média para não gerar conflitos.\n* **Efeito de Recência (Recency):** Supervalorizar fatos ocorridos nas últimas semanas em detrimento do desempenho do período avaliativo completo.\n* **Leniência vs. Severidade:** Avaliadores sistematicamente benevolentes ou excessivamente rigorosos.\n\n---\n\n## 3. Gestão de Conflitos e Negociação\n\n### 3.1 Níveis e Tipos de Conflitos\n* *Intrapessoal:* Dilemas internos do indivíduo.\n* *Interpessoal:* Divergências entre dois ou mais servidores.\n* *Intergrupal:* Disputas entre setores, equipes ou diretorias do órgão.\n\n### 3.2 Estilos de Administração de Conflitos (Modelo de Thomas-Kilmann)\nBaseado em dois eixos: Assertividade (foco nos próprios interesses) e Cooperatividade (foco nos interesses do outro):\n1. **Competição (Forçar):** Alta assertividade e baixa cooperação. Ganha-Perde.\n2. **Acomodação (Suavizar):** Baixa assertividade e alta cooperação. Perde-Ganha.\n3. **Evitação (Retirar-se):** Baixa assertividade e baixa cooperação. Perde-Perde.\n4. **Compromisso (Acordo):** Médio em assertividade e cooperação (divisão de perdas e ganhos mútuos).\n5. **Colaboração (Solução de Problemas):** Alta assertividade e alta cooperação. **Ganha-Ganha** (integração criativa das necessidades de ambas as partes).\n\n---\n\n### 📝 Checklist de Revisão\n- [ ] Definir o modelo CHA de competências (Conhecimento, Habilidade, Atitude)\n- [ ] Conhecer os 3 estágios da mudança de Kurt Lewin\n- [ ] Distinguir Avaliação 360 graus dos métodos tradicionais de avaliação\n- [ ] Identificar os vieses de avaliação (Halo, Recência, Tendência Central)\n- [ ] Memorizar os 5 estilos de gestão de conflitos de Thomas-Kilmann\n"}, {"id": "10-rs-tde", "title": "🎯 Recrutamento, Seleção e TD&E", "category": "Psicologia Específica", "fileName": "10 - Recrutamento, Seleção e TD&E.md", "content": "---\ntags:\n  - recrutamento-selecao\n  - treinamento-desenvolvimento\n  - aposentadoria\n  - kirkpatrick\n---\n# 🎯 Recrutamento, Seleção e TD&E\n\n---\n\n## 1. Processos de Recrutamento e Seleção de Pessoas\n\n### 1.1 Recrutamento Interno vs. Externo vs. Misto\n* **Recrutamento Interno:**\n  - Vagas preenchidas por servidores da própria organização (processos seletivos internos, remoções, cargos em comissão).\n  - *Vantagens:* Mais rápido, menor custo, motiva o quadro de servidores e aproveita o investimento em treinamento.\n  - *Desvantagens:* Pode gerar conflitos de interesse e perpetuar a cultura existente (*inbreeding*).\n* **Recrutamento Externo:**\n  - Captação de candidatos fora da organização (Concurso Público no setor público).\n  - *Vantagens:* Traz \"sangue novo\", novas ideias e enriquece o capital intelectual.\n  - *Desvantagens:* Processo mais demorado, oneroso e exige período de socialização/adaptação.\n\n### 1.2 Técnicas e Métodos de Seleção\n* **Entrevista por Competências:** Técnica estruturada baseada na premissa de que o **comportamento passado em situações reais é o melhor preditor do comportamento futuro**.\n  - *Técnica STAR / CAR:* Situação, Tarefa, Ação adotada e Resultado alcançado.\n* **Provas de Conhecimento / Habilidade:** Avaliam a capacidade técnica prática.\n* **Testes Psicológicos:** Devem ter validação científica e parecer favorável no SATEPSI (Res. CFP 31/2022 e 08/2025).\n* **Dinâmicas de Grupo e Jogos de Empresas:** Avaliam liderança, trabalho em equipe e comunicação interpessoal.\n\n---\n\n## 2. Treinamento, Desenvolvimento e Educação (TD&E)\n\n### 2.1 Distinção Conceitual\n* **Treinamento (Curto Prazo):** Foco na função atual; transmissão de habilidades imediatas para o desempenho do cargo.\n* **Desenvolvimento (Médio/Longo Prazo):** Prepara o profissional para novos desafios e posições futuras mais complexas.\n* **Educação Corporativa:** Aprendizagem contínua alinhada à estratégia e missão global da organização pública.\n\n### 2.2 As 4 Etapas do Ciclo de Treinamento\n1. **LNT (Levantamento das Necessidades de Treinamento):** Diagnóstico das deficiências de competência em nível organizacional, das tarefas e individual.\n2. **Desenho / Planejamento do Treinamento:** Definição dos objetivos instrucionais, público-alvo, instrutores, métodos pedagógicos e cronograma.\n3. **Execução:** Aplicação do programa de treinamento.\n4. **Avaliação dos Resultados:** Medição da eficácia do treinamento.\n\n### 2.3 O Modelo de Avaliação em 4 Níveis de Donald Kirkpatrick\n1. **Nível 1 - Reação:** Mede a satisfação imediata dos participantes com o curso, instrutor e infraestrutura.\n2. **Nível 2 - Aprendizagem:** Mede a aquisição real de novos conhecimentos e habilidades (testes pré e pós-treinamento).\n3. **Nível 3 - Comportamento no Cargo (Transferência):** Avalia se o participante aplica na sua rotina diária de trabalho o que aprendeu no treinamento.\n4. **Nível 4 - Resultados (Impacto):** Mede o impacto direto do treinamento nos indicadores organizacionais do órgão (produtividade, redução de erros, economicidade).\n\n---\n\n## 3. Desligamento e Preparação para Aposentadoria (PPA)\n\n* **Entrevista de Desligamento:** Diagnóstico dos motivos de saída de colaboradores (turnover), identificação de problemas de liderança e clima.\n* **Programa de Preparação para Aposentadoria (PPA):**\n  - Exigência do Estatuto do Idoso e prática valorizada no setor público.\n  - Aborda os aspectos biopsicossociais da aposentadoria: planejamento financeiro, projeto de vida, novos papéis sociais, saúde mental e quebra de rotina.\n\n---\n\n### 📝 Checklist de Revisão\n- [ ] Diferenciar Recrutamento (atração) de Seleção (escolha/triagem)\n- [ ] Saber estruturar uma pergunta no modelo STAR para entrevistas por competência\n- [ ] Memorizar as 4 etapas do ciclo de treinamento (Diagnóstico/LNT, Desenho, Execução, Avaliação)\n- [ ] Conhecer os 4 níveis de avaliação de Kirkpatrick (Reação ➔ Aprendizagem ➔ Comportamento ➔ Resultados)\n- [ ] Compreender os objetivos de um Programa de Preparação para Aposentadoria (PPA)\n"}, {"id": "11-cultura-clima", "title": "🌟 Cultura, Clima e Motivação", "category": "Psicologia Específica", "fileName": "11 - Cultura, Clima e Motivação no Trabalho.md", "content": "---\ntags:\n  - cultura-organizacional\n  - clima-organizacional\n  - motivacao\n  - maslow\n  - herzberg\n---\n# 🌟 Cultura, Clima e Motivação no Trabalho\n\n---\n\n## 1. Cultura Organizacional e o Modelo de Edgar Schein\n\nA Cultura Organizacional compreende o conjunto de crenças, valores e pressupostos compartilhados que regem como as pessoas se comportam nas organizações.\n\n### 1.1 Os 3 Níveis da Cultura de Edgar Schein\n1. **Artefatos Visíveis:** Nível mais superficial. Elementos visíveis, auditíveis e táteis (arquitetura do prédio, vestimenta, rituais, jargões, símbolos e organograma). Fáceis de observar, mas difíceis de interpretar isoladamente.\n2. **Valores Compartilhados (Esposados):** Filosofias, metas, normas sociais e justificativas conscientes expressas pela liderança (missão, visão, valores institucionais da SEMA).\n3. **Pressupostos Básicos Subjacentes:** Nível mais profundo e inconsciente. Crenças e percepções invisíveis, tidas como verdades inquestionáveis, que determinam como os membros realmente pensam e reagem. Extremamente difíceis de mudar.\n\n---\n\n## 2. Clima Organizacional\n\n* **Diferença entre Cultura e Clima:**\n  - **Cultura:** Estrutural, histórica, profunda e estável (a \"personalidade\" do órgão).\n  - **Clima:** Conjuntural, perceptivo, mutável e de curto prazo (o \"humor\" da organização em um momento específico).\n* **Pesquisa de Clima Organizacional:** Instrumento diagnóstico que afere a percepção dos servidores sobre fatores como remuneração, condições físicas, estilo de chefia, relacionamento interpessoal e orgulho da instituição.\n\n---\n\n## 3. Teorias Clássicas e Contemporâneas de Motivação\n\n### 3.1 Teoria da Hierarquia das Necessidades (Abraham Maslow)\nNecessidades dispostas em uma pirâmide hierárquica (uma necessidade só motiva quando as inferiores são razoavelmente satisfeitas):\n1. *Fisiológicas:* Salário básico, intervalos, alimentação;\n2. *Segurança:* Estabilidade funcional, ambiente seguro, plano de saúde;\n3. *Sociais / Amor:* Relacionamento com pares, espírito de equipe, acolhimento;\n4. *Estima:* Reconhecimento, autonomia, status, valorização profissional;\n5. *Autorrealização:* Crescimento pessoal, criatividade, desenvolvimento pleno do potencial.\n\n### 3.2 Teoria dos Dois Fatores (Frederick Herzberg)\n* **Fatores Higiênicos (Extrínsecos):**\n  - Relacionados ao ambiente de trabalho (salário, benefícios, condições físicas, políticas da empresa, supervisão).\n  - *Função:* **Previnem a insatisfação**, mas **NÃO geram motivação intrínseca** (não geram satisfação). Sua presença gera um estado de \"não insatisfação\".\n* **Fatores Motivacionais (Intrínsecos):**\n  - Relacionados ao conteúdo do cargo e às tarefas em si (desafio do trabalho, reconhecimento, responsabilidade, realização e crescimento).\n  - *Função:* **Geram satisfação e motivação duradoura**.\n\n### 3.3 Teoria da Expectativa / Expectância (Victor Vroom)\nA motivação resulta do produto de três variáveis: $\text{Força Motivacional} = E \times I \times V$:\n* **Expectativa (Esforço ➔ Desempenho):** A crença de que o esforço levará ao desempenho esperado.\n* **Instrumentalidade (Desempenho ➔ Recompensa):** A crença de que o bom desempenho resultará em uma recompensa.\n* **Valência (Valor da Recompensa):** O valor subjetivo e a atração que o indivíduo atribui à recompensa alcançada.\n\n### 3.4 Teoria das Necessidades Adquiridas (David McClelland)\n* **Necessidade de Realização:** Busca pelo sucesso, superação de metas difíceis e feedback contínuo.\n* **Necessidade de Afiliação:** Busca por relacionamentos interpessoais harmoniosos e aceitação social.\n* **Necessidade de Poder:** Desejo de influenciar, liderar e controlar pessoas ou recursos.\n\n---\n\n### 📝 Checklist de Revisão\n- [ ] Saber os 3 níveis da cultura de Schein (Artefatos, Valores, Pressupostos Básicos)\n- [ ] Diferenciar Cultura (estável/profunda) de Clima (temporário/perceptivo)\n- [ ] Entender a separação de fatores higiênicos e motivacionais de Herzberg\n- [ ] Conhecer os 3 fatores da Teoria da Expectativa de Vroom (Expectativa, Instrumentalidade, Valência)\n"}, {"id": "12-grupos-lideranca", "title": "👥 Psicologia Social e Liderança", "category": "Psicologia Específica", "fileName": "12 - Psicologia Social, Grupos e Liderança.md", "content": "---\ntags:\n  - psicologia-social\n  - lideranca\n  - grupos\n  - equipes\n---\n# 👥 Psicologia Social, Grupos e Liderança\n\n---\n\n## 1. Processos Grupais e Equipes de Trabalho\n\n### 1.1 Grupos vs. Equipes de Trabalho\n* **Grupo de Trabalho:** Conjunto de pessoas que compartilham informações para tomar decisões individuais; a meta é individual e a responsabilidade é individual.\n* **Equipe de Trabalho:** Conjunto de pessoas cujo desempenho individual resulta em um **desempenho coletivo superior à soma das contribuições individuais (Sinergia Positiva)**. A meta é compartilhada e a responsabilidade é mútua e coletiva.\n\n### 1.2 Fases do Desenvolvimento de Grupos (Modelo de Tuckman)\n1. **Formação (Forming):** Incerteza quanto ao propósito, estrutura e liderança; membros testam limites.\n2. **Conflito / Tempestade (Storming):** Conflitos internos pela liderança e disputa de espaço.\n3. **Normatização (Norming):** Coesão grupal, senso de identidade compartilhado e estabelecimento de regras.\n4. **Desempenho (Performing):** Estrutura funcional consolidada, foco total na execução e alcance de metas.\n5. **Desintegração / Encerramento (Adjourning):** Conclusão das atividades e dissolução do grupo.\n\n### 1.3 Fenômenos Psicológicos Grupais\n* **Coesão Grupal:** Grau em que os membros se sentem atraídos pelo grupo e motivados a permanecer nele.\n* **Pensamento Grupal (Groupthink):** Deterioração da eficiência mental e do julgamento moral por busca de conformidade e consenso acrítico no grupo.\n* **Facilitação Social:** Tendência a ter melhor desempenho em tarefas simples na presença de outros.\n* **Folga Social (Vadiagem Social):** Tendência de indivíduos a despenderem menos esforço em tarefas conjuntas do que quando trabalham sozinhos.\n\n---\n\n## 2. Teorias e Estilos de Liderança\n\n### 2.1 Estilos Clássicos de Liderança (White e Lippitt)\n* **Liderança Autocrática:** O líder fixa as diretrizes sem qualquer participação do grupo; dita as ordens e tarefas.\n* **Liderança Democrática:** As diretrizes são debatidas e decididas pelo grupo, estimulado e assistido pelo líder.\n* **Liderança Liberal (Laissez-Faire):** Liberdade total para as decisões do grupo, com participação mínima do líder.\n\n### 2.2 Liderança Situacional (Hersey e Blanchard)\n* Não existe um estilo único e ideal de liderança; a conduta do líder depende do **nível de maturidade / prontidão dos subordinados** (competência e comprometimento):\n  - *Direção (Telling):* Baixa maturidade (orientação para a tarefa).\n  - *Orientação / Persuasão (Selling):* Média-baixa maturidade.\n  - *Apoio / Participação (Participating):* Média-alta maturidade.\n  - *Delegação (Delegating):* Alta maturidade (alta competência e alto comprometimento).\n\n### 2.3 Liderança Transformacional vs. Transacional\n* **Transacional:** Baseada em trocas contratuais e contingenciais de recompensas por metas atingidas (modelo tradicional).\n* **Transformacional:** Inspira, motiva e transforma os liderados pelo carisma, estímulo intelectual, consideração individualizada e visão compartilhada de futuro.\n\n---\n\n### 📝 Checklist de Revisão\n- [ ] Diferenciar Grupo de Equipe de trabalho (sinergia positiva e responsabilidade compartilhada)\n- [ ] Conhecer as 5 etapas de formação de grupos de Tuckman\n- [ ] Identificar os riscos do Pensamento Grupal (Groupthink)\n- [ ] Saber os 4 estilos da Liderança Situacional (Direção, Orientação, Apoio, Delegação)\n"}, {"id": "13-crises-catastrofes", "title": "🚨 Intervenção em Crises e Catástrofes", "category": "Saúde Mental no Trabalho", "fileName": "13 - Intervenção em Crises, Emergências e Catástrofes.md", "content": "---\ntags:\n  - crises-catastrofes\n  - emergencia\n  - primeiros-socorros-psicologicos\n  - desastres-ambientais\n---\n# 🚨 Intervenção em Crises, Emergências e Catástrofes\n\n> [!NOTE]\n> No contexto da SEMA/MT, a atuação do psicólogo em desastres ambientais, incêndios florestais catastróficos e enchentes é crucial tanto para o apoio aos servidores que atuam no combate (brigadistas e fiscais) quanto para o suporte às comunidades atingidas.\n\n---\n\n## 1. Primeiros Socorros Psicológicos (PSP / PFA)\n\nOs Primeiros Socorros Psicológicos são intervenções psicossociais humanitárias, de suporte e práticas, voltadas para pessoas que vivenciaram eventos traumáticos ou de crise severa:\n\n### 1.1 Princípios Básicos de Ação (OMS)\n1. **Olhar (Look):**\n   - Verificar a segurança do local;\n   - Identificar pessoas com necessidades básicas e médicas urgentes;\n   - Observar pessoas com reações graves de estresse.\n2. **Ouvir (Listen):**\n   - Aproximar-se respeitosamente das pessoas necessitadas;\n   - Perguntar sobre suas necessidades e preocupações imediatas;\n   - Escutar com atenção e empatia ativa, sem forçar a pessoa a relatar o trauma detalhadamente.\n3. **Conectar (Link):**\n   - Ajudar as pessoas a suprirem necessidades básicas (água, abrigo, contato com familiares);\n   - Fornecer informações claras e confiáveis;\n   - Conectar os atingidos às suas redes de suporte comunitário e serviços públicos especializados.\n\n---\n\n## 2. Reações Típicas ao Trauma e Estresse Pós-Traumático\n\n* **Reações Normais em Situações Anormais:** Medo intenso, confusão mental, insônia, entorpecimento emocional, choro e culpa.\n* **TEPT (Transtorno de Estresse Pós-Traumático):** Diagnosticado quando sintomas intrusivos (flashbacks, pesadelos), esquiva ativa, hipervigilância e alterações negativas cognitivas persistem por **mais de um mês** após o evento traumático e geram prejuízo funcional severo.\n\n---\n\n## 3. Cuidado à Saúde Mental dos Profissionais de Resposta (Equipes da SEMA)\n\n* **Fadiga por Compaixão e Burnout Secundário:** O desgaste emocional sofrido por profissionais que lidam continuamente com desastres, mortes de animais e destruição de ecossistemas.\n* **Estratégias de Descompressão e Suporte:**\n  - Rodízio de turnos operacionais;\n  - Reuniões pós-evento de acolhimento e escuta técnica (sem forçar repetição invasiva de traumas);\n  - Garantia de descanso e nutrição adequados nas bases avançadas de fiscalização.\n\n---\n\n### 📝 Checklist de Revisão\n- [ ] Memorizar os 3 princípios de ação dos PSP da OMS: Olhar, Ouvir, Conectar\n- [ ] Compreender que os PSP NÃO consistem em psicoterapia formal nem debriefing invasivo\n- [ ] Distinguir Reação Aguda ao Estresse de TEPT\n"}, {"id": "14-saude-nrs", "title": "🩺 Saúde do Trabalhador e NRs (1, 5, 17)", "category": "Saúde Mental no Trabalho", "fileName": "14 - Saúde do Trabalhador e Normas Regulamentadoras.md", "content": "---\ntags:\n  - saude-do-trabalhador\n  - normas-regulamentadoras\n  - nr1\n  - nr17\n  - pgr\n---\n# 🩺 Saúde do Trabalhador e Normas Regulamentadoras (NRs)\n\n---\n\n## 1. As Normas Regulamentadoras Essenciais para a Psicologia\n\n### 1.1 NR-1: Disposições Gerais e Gerenciamento de Riscos Ocupacionais (GRO / PGR)\n* **Programa de Gerenciamento de Riscos (PGR):**\n  - Documento obrigatório para identificação de perigos e avaliação de riscos ocupacionais em todas as organizações.\n  - Composto por: **Inventário de Riscos** e **Plano de Ação**.\n  - **Inclusão Expressa dos Riscos Psicossociais:** A NR-1 contempla os riscos de natureza ergonômica e psicossocial (pressão excessiva, jornadas exaustivas, assédio, falta de autonomia), exigindo avaliação sistemática e medidas de prevenção (vinculada à **Resolução CFP nº 14/2023**).\n\n### 1.2 NR-5: Comissão Interna de Prevenção de Acidentes e de Assédio (CIPA)\n* Com a promulgação da **Lei nº 14.457/2022**, a CIPA passou a se chamar Comissão Interna de Prevenção de Acidentes **e de Assédio**.\n* **Atribuição Adicional Obrigatória:** Inclusão de regras de conduta sobre assédio sexual e outras formas de violência nas normas internas da instituição, estabelecimento de canal de recebimento e apuração de denúncias e treinamento anual dos servidores.\n\n### 1.3 NR-17: Ergonomia\n* Visa a adaptar as condições de trabalho às características psicofisiológicas dos trabalhadores, de modo a proporcionar o máximo de conforto, segurança e desempenho eficiente.\n* **Os 3 Domínios da Ergonomia:**\n  1. *Ergonomia Física:* Postura, mobiliário, movimentos repetitivos e esforço físico.\n  2. *Ergonomia Cognitiva:* Carga mental de trabalho, processos de tomada de decisão, estresse e interação homem-computador.\n  3. *Ergonomia Organizacional:* Organização do trabalho, ritmo de trabalho, pausas, comunicação e trabalho em turnos.\n* **AET (Análise Ergonômica do Trabalho):** Estudo aprofundado das condições reais de trabalho para mitigar sobrecargas físicas e mentais.\n\n### 1.4 Demais NRs Citadas no Edital\n* **NR-4 (SESMT):** Serviços Especializados em Segurança e em Medicina do Trabalho.\n* **NR-7 (PCMSO):** Programa de Controle Médico de Saúde Ocupacional (exames admissionais, periódicos, demissionais e de retorno).\n\n---\n\n### 📝 Checklist de Revisão\n- [ ] Conhecer o papel da NR-1 no mapeamento de riscos psicossociais\n- [ ] Lembrar a nova atribuição da NR-5/CIPA no combate ao assédio (Lei 14.457/2022)\n- [ ] Saber os 3 domínios da ergonomia na NR-17 (Física, Cognitiva e Organizacional)\n"}, {"id": "15-psicopatologia-dejours", "title": "🧠 Dejours, Clínicas e Burnout", "category": "Saúde Mental no Trabalho", "fileName": "15 - Psicopatologia e Clínicas do Trabalho.md", "content": "---\ntags:\n  - psicodinâmica-do-trabalho\n  - dejours\n  - burnout\n  - saude-mental\n---\n# 🧠 Psicopatologia e Clínicas do Trabalho\n\n---\n\n## 1. Psicodinâmica do Trabalho (Christophe Dejours)\n\nA Psicodinâmica do Trabalho investiga a relação entre a organização do trabalho e o sofrimento psíquico, analisando como os trabalhadores mantêm o equilíbrio psíquico mesmo sob condições adversas.\n\n### 1.1 Conceitos Fundamentais de Dejours\n* **Trabalho Prescrito vs. Trabalho Real:**\n  - *Prescrito:* A tarefa oficial, as normas, manuais e procedimentos formais.\n  - *Real:* O que é efetivamente realizado na prática, exigindo improvisação, criatividade e enfrentamento do inesperado pelo trabalhador.\n* **Prazer e Sofrimento no Trabalho:**\n  - O trabalho nunca é neutro em relação à saúde mental: ele pode ser fonte de saúde/realização ou de sofrimento e adoecimento.\n  - **Sofrimento Criativo / Produtivo:** O sofrimento impulsiona a transformação do trabalho e a criação de soluções.\n  - **Sofrimento Patogênico:** Quando as margens de liberdade do trabalhador são bloqueadas pela organização do trabalho rígida, gerando adoecimento psíquico.\n* **Estratégias Defensivas (Individuais e Coletivas):**\n  - Mecanismos psíquicos construídos pelos trabalhadores para suportar o sofrimento e a angústia sem desmoronar (ex.: negação do perigo, cinismo, hiperatividade, ironia e ideologias defensivas de grupo).\n* **Reconhecimento:**\n  - Fundamental para a saúde mental. Opera em duas dimensões:\n    1. *Julgamento de Utilidade:* Feito pela hierarquia/chefia sobre a relevância técnica e econômica do trabalho.\n    2. *Julgamento de Beleza / Idoneidade:* Feito pelos pares e colegas sobre a qualidade e maestria no cumprimento das regras do ofício.\n\n---\n\n## 2. Síndrome de Burnout (Esgotamento Profissional)\n\n* Definida pela CID-11 como um fenômeno estritamente ocupacional (código QD85), resultante de estresse crônico no local de trabalho não gerenciado com sucesso.\n* **As 3 Dimensões do Burnout (Christina Maslach):**\n  1. **Exaustão Emocional:** Sensação de esgotamento total de energia física e mental.\n  2. **Despersonalização / Cinismo:** Atitude fria, distanciada, desumanizada e cínica em relação aos colegas, usuários ou cidadãos atendidos.\n  3. **Baixa Realização Profissional / Ineficácia:** Sentimento de incompetência, frustração e fracasso profissional.\n\n---\n\n## 3. Lista de Doenças Relacionadas ao Trabalho (Portaria GM/MS nº 1.999/2023)\n\n* Atualização histórica da lista do Ministério da Saúde que incluiu explicitamente:\n  - Síndrome de Burnout (Esgotamento Profissional);\n  - Transtornos de Ansiedade e Depressão relacionados ao estresse crônico e ao assédio no trabalho;\n  - Transtorno de Estresse Pós-Traumático decorrente de assédio moral ou violência ocupacional;\n  - Abuso de substâncias psicoativas relacionado às pressões e jornadas de trabalho.\n\n---\n\n### 📝 Checklist de Revisão\n- [ ] Distinguir Trabalho Prescrito de Trabalho Real em Dejours\n- [ ] Compreender o papel das Estratégias Defensivas Coletivas\n- [ ] Conhecer as duas dimensões do Reconhecimento (Utilidade e Beleza)\n- [ ] Memorizar as 3 dimensões do Burnout de Maslach (Exaustão, Despersonalização, Baixa Realização)\n- [ ] Lembrar que a Portaria GM/MS 1.999/2023 reconhece Burnout e Depressão como doenças do trabalho\n"}, {"id": "16-assedio-violencia", "title": "🛑 Assédio, Discriminação e Violência", "category": "Saúde Mental no Trabalho", "fileName": "16 - Assédio, Discriminação e Violência no Trabalho.md", "content": "---\ntags:\n  - assedio-moral\n  - assedio-sexual\n  - violencia-no-trabalho\n  - nexo-causal\n---\n# 🛑 Assédio, Discriminação e Violência no Trabalho\n\n---\n\n## 1. Assédio Moral no Ambiente de Trabalho\n\n### 1.1 Conceituação\n* Conduta abusiva, intencional e reiterada, manifestada por meio de palavras, atos, gestos ou omissões, que atenta contra a personalidade, dignidade ou integridade psíquica ou física de uma pessoa, ameaçando seu emprego ou degradando o clima de trabalho.\n* **Classificação por Direção:**\n  - *Vertical Descendente:* Da chefia contra o subordinado (mais frequente).\n  - *Vertical Ascendente:* Dos subordinados contra uma chefia.\n  - *Horizontal:* Entre colegas do mesmo nível hierárquico.\n  - *Misto:* Combinação de ações de chefia e colegas.\n* **Assédio Moral Individual vs. Organizacional (Institucional):**\n  - *Individual:* Foco em perseguir e isolar um indivíduo específico.\n  - *Organizacional / Institucional:* Política deliberada de gestão que utiliza metas abusivas, humilhação pública e terror psicológico como método gerencial de produtividade.\n\n---\n\n## 2. Assédio Sexual\n\n* No âmbito penal (Art. 216-A do CP): Constranger alguém com o intuito de obter vantagem ou favorecimento sexual, prevalecendo-se o agente da sua condição de superior hierárquico ou ascendência inerentes ao exercício de emprego, cargo ou função.\n* No âmbito administrativo/trabalhista:\n  - *Assédio Sexual por Chantagem:* A concessão ou recusa de favores sexuais determina a manutenção ou perda de direitos funcionais.\n  - *Assédio Sexual por Intimidação (Ambiente Hostil):* Comportamentos de conotação sexual desrespeitosos e indesejados que criam um ambiente intimidador e humilhante.\n\n---\n\n## 3. Nexo Causal e Atuação Multidisciplinar\n\n* **Nexo Causal:** Vínculo fático-jurídico estabelecido entre a doença desenvolvida pelo trabalhador e as condições ou eventos do ambiente de trabalho.\n* **Concausa:** Fatores laborais que, mesmo não sendo a causa exclusiva da doença, contribuíram diretamente para o surgimento ou agravamento do quadro psiquiátrico/psicológico.\n* **Atuação da Psicologia:** Apoio na investigação das causas organizacionais, acolhimento isento da vítima e proposição de medidas preventivas institucionais.\n\n---\n\n### 📝 Checklist de Revisão\n- [ ] Distinguir as direções do assédio moral (descendente, ascendente, horizontal)\n- [ ] Diferenciar Assédio Moral Individual de Assédio Moral Organizacional\n- [ ] Conhecer a diferença entre assédio sexual por chantagem e por intimidação\n- [ ] Entender o conceito de nexo concausal em saúde do trabalhador\n"}, {"id": "17-qvt", "title": "🌿 Qualidade de Vida no Trabalho (QVT)", "category": "Saúde Mental no Trabalho", "fileName": "17 - Qualidade de Vida e Bem-Estar no Trabalho (QVT).md", "content": "---\ntags:\n  - qvt\n  - bem-estar\n  - qualidade-de-vida\n---\n# 🌿 Qualidade de Vida e Bem-Estar no Trabalho (QVT)\n\n---\n\n## 1. Modelos Clássicos de QVT\n\n### 1.1 Modelo de Richard Walton (Os 8 Critérios)\nUm dos modelos mais cobrados em concursos públicos:\n1. **Compensação justa e adequada:** Remuneração condizente com a complexidade do trabalho e equidade interna e externa.\n2. **Condições de segurança e saúde no trabalho:** Salubridade, ergonomia e proteção física.\n3. **Utilização e desenvolvimento de capacidades:** Autonomia, variedade de habilidades e significado das tarefas.\n4. **Oportunidade de crescimento contínuo e segurança:** Carreira estável e desenvolvimento profissional.\n5. **Integração social na organização:** Ausência de preconceitos, clima de companheirismo e senso comunitário.\n6. **Constitucionalismo:** Respeito aos direitos trabalhistas, privacidade e liberdade de expressão.\n7. **Trabalho e espaço total de vida:** Equilíbrio entre a vida profissional e a vida pessoal/familiar.\n8. **Relevância social da vida no trabalho:** Orgulho da imagem institucional da organização perante a sociedade (muito forte na SEMA).\n\n### 1.2 QVT Assistencialista vs. QVT Preventiva/Estratégica\n* **Assistencialista (Superficial):** Focada apenas em benefícios periféricos (ginástica laboral, frutas, massagem), sem alterar a organização e o ritmo real do trabalho.\n* **Preventiva / Estratégica:** Focada na revisão dos processos de trabalho, ergonomia real, combate ao assédio, autonomia funcional e desenvolvimento humano.\n\n---\n\n### 📝 Checklist de Revisão\n- [ ] Memorizar os 8 critérios do modelo de Walton\n- [ ] Diferenciar QVT assistencialista de QVT estratégica\n"}, {"id": "18-discursiva", "title": "✍️ Prova Discursiva — Temas Quentes", "category": "Discursiva & Banca", "fileName": "18 - Prova Discursiva de Psicologia — Estratégia.md", "content": "---\ntags:\n  - discursiva\n  - psicologia\n  - redacao-tecnica\n---\n# ✍️ Prova Discursiva de Psicologia — Estratégia e Temas Quentes\n\n> [!IMPORTANT]\n> A Prova Discursiva vale **10,0 pontos** e é o **segundo critério de desempate**. Nota inferior a **6,0 pontos (60%)** elimina o candidato imediatamente do certame.\n\n---\n\n## 1. O que a Cesgranrio Avalia na Discursiva de Psicologia\n\n1. **Uso Preciso de Conceitos e Normas:** Citação exata de teorias (Dejours, Schein, Maslach), Resoluções do CFP (06/2019, 14/2023, 31/2022) e Normas Regulamentadoras (NR-1, NR-17).\n2. **Postura Ética e Profissional:** Respeito irrestrito ao Código de Ética do Psicólogo e Direitos Humanos.\n3. **Clareza e Estrutura Técnica:** Texto fluido, objetivo, dividido em tópicos ou parágrafos lógicos.\n\n---\n\n## 2. Estrutura Recomendada para o Parecer / Estudo de Caso (4 Parágrafos)\n\n1. **Parágrafo 1: Contextualização e Enquadramento Técnico (4 a 5 linhas)**\n   - Sintetize a situação-problema apresentada no caso hipotético.\n   - Enquadre o tema nas áreas da Psicologia Organizacional e do Trabalho e Saúde Mental.\n2. **Parágrafo 2: Fundamentação Teórica e Normativa (7 a 8 linhas)**\n   - Apresente a base teórica e jurídica aplicável (ex.: Código de Ética do Psicólogo, NR-1, Resolução CFP 14/2023, Psicodinâmica do Trabalho de Dejours).\n3. **Parágrafo 3: Proposta de Intervenção e Ações Práticas (7 a 8 linhas)**\n   - Apresente soluções exequíveis no contexto de um órgão público estadual (ex.: criação de comissão interdisciplinar, pesquisa de clima, capacitação de líderes, adequação ergonômica).\n4. **Parágrafo 4: Conclusão e Avaliação de Resultados (4 a 5 linhas)**\n   - Resuma os ganhos esperados (saúde dos servidores, redução do absenteísmo, eficiência do serviço público ambiental).\n\n---\n\n## 3. 🎯 8 Temas Prováveis no Contexto da SEMA/MT\n\n1. **Prevenção e Enfrentamento ao Assédio Moral e Sexual no Órgão Público:** Estruturação de canal de acolhimento ético e fluxo de apuração em conformidade com a NR-5 e Código de Ética.\n2. **Avaliação e Gestão de Riscos Psicossociais (NR-1 e Resolução CFP nº 14/2023):** Elaboração de plano de ação preventivo para fiscais e brigadistas que atuam sob estresse crônico de campo.\n3. **Intervenção Psicossocial em Situações de Crises e Desastres Ambientais:** Aplicação dos Primeiros Socorros Psicológicos (PSP) a servidores e populações atingidas por queimadas e enchentes.\n4. **Prevenção à Síndrome de Burnout e Sofrimento Psíquico:** Estratégias organizacionais com base na Psicodinâmica de Dejours e Portaria GM/MS 1.999/2023.\n5. **Elaboração de Documentos Psicológicos (Resolução CFP nº 06/2019):** Distinção técnica e limites éticos entre Atestado, Laudo, Relatório e Parecer em processos administrativos disciplinares ou de saúde funcional.\n6. **Implantação de Programa de Qualidade de Vida no Trabalho (QVT):** Estruturação com base no modelo de Walton focando em condições reais de trabalho e liderança humanizada.\n7. **Mediação de Conflitos Interpessoais e Desenvolvimento de Equipes:** Abordagem colaborativa de Thomas-Kilmann e liderança situacional.\n8. **Políticas de Diversidade e Enfrentamento a Discriminações (Resoluções CFP 01/99 e 18/02):** Ações afirmativas e garantia de respeito a minorias no serviço público.\n"}, {"id": "19-cesgranrio", "title": "🎓 Estratégia Banca Cesgranrio", "category": "Discursiva & Banca", "fileName": "19 - Estratégia Banca Cesgranrio para Psicologia.md", "content": "---\ntags:\n  - cesgranrio\n  - banca\n  - psicologia\n---\n# 🎓 Estratégia Banca Cesgranrio para Psicologia\n\n---\n\n## 1. Perfil da Cesgranrio em Concursos de Psicologia\n\nA Fundação Cesgranrio tem histórico expressivo em provas de Psicologia para estatais e órgãos públicos:\n* Concursos de referência: **Petrobras (Psicólogo), Transpetro, BNDES, Caixa Econômica Federal e Eletrobras**.\n* Características das questões:\n  - Enunciados com **casos práticos ou cenários hipotéticos** de organizações de trabalho.\n  - Alternativas com foco na distinção precisa entre teorias e conceitos de autores clássicos (Dejours, Schein, Maslow, Herzberg).\n  - Cobrança rígida da literalidade de Resoluções do CFP e Normas Regulamentadoras.\n\n---\n\n## 2. Divisão Recomendada das 5 Horas de Prova\n\n* 15 min: Leitura geral do caderno e rascunho de tópicos da **Prova Discursiva**.\n* 60 min: Redação definitiva da Prova Discursiva.\n* 60 min: 15 questões de Língua Portuguesa (atenção a textos longos).\n* 30 min: 15 questões de Conhecimentos Gerais (Geo/Hist MT e Legislação Estadual).\n* 105 min: 40 questões de Conhecimentos Específicos (média de 2,5 min/questão).\n* 30 min: Preenchimento seguro do cartão-resposta.\n\n> [!TIP]\n> Em provas da Cesgranrio não há fator de correção negativo (uma errada não anula uma certa). **Portanto, nunca deixe nenhuma questão em branco!**\n"}];
+
+    marked.setOptions({
+      gfm: true,
+      breaks: true
+    });
+
+    mermaid.initialize({ startOnLoad: false, theme: 'default' });
+
+    let currentDocIndex = 0;
+
+    function processMarkdown(md) {
+      md = md.replace(/^---[\s\S]*?---\s*/m, '');
+
+      md = md.replace(/\[\[(.*?)\|(.*?)\]\]/g, function(match, p1, p2) {
+        const found = DOCS.find(d => d.title.includes(p1.trim()) || d.fileName.includes(p1.trim()));
+        const linkId = found ? found.id : '00-dashboard';
+        return `[${p2.trim()}](#/${linkId})`;
+      });
+
+      md = md.replace(/\[\[(.*?)\]\]/g, function(match, p1) {
+        const found = DOCS.find(d => d.title.includes(p1.trim()) || d.fileName.includes(p1.trim()));
+        const linkId = found ? found.id : '00-dashboard';
+        return `[${p1.trim()}](#/${linkId})`;
+      });
+
+      let html = marked.parse(md);
+
+      html = html.replace(/<blockquote>\s*<p>\s*\[!NOTE\]\s*([\s\S]*?)<\/p>\s*<\/blockquote>/gi, '<div class="callout callout-note"><strong>ℹ️ NOTA:</strong> $1</div>');
+      html = html.replace(/<blockquote>\s*<p>\s*\[!TIP\]\s*([\s\S]*?)<\/p>\s*<\/blockquote>/gi, '<div class="callout callout-tip"><strong>💡 DICA:</strong> $1</div>');
+      html = html.replace(/<blockquote>\s*<p>\s*\[!WARNING\]\s*([\s\S]*?)<\/p>\s*<\/blockquote>/gi, '<div class="callout callout-warning"><strong>⚠️ ATENÇÃO:</strong> $1</div>');
+      html = html.replace(/<blockquote>\s*<p>\s*\[!IMPORTANT\]\s*([\s\S]*?)<\/p>\s*<\/blockquote>/gi, '<div class="callout callout-important"><strong>❗ IMPORTANTE:</strong> $1</div>');
+      html = html.replace(/<blockquote>\s*<p>\s*\[!CAUTION\]\s*([\s\S]*?)<\/p>\s*<\/blockquote>/gi, '<div class="callout callout-warning"><strong>🛑 CUIDADO:</strong> $1</div>');
+
+      html = html.replace(/<pre><code class="language-mermaid">([\s\S]*?)<\/code><\/pre>/gi, '<div class="mermaid">$1</div>');
+
+      return html;
+    }
+
+    function renderSidebar(filteredDocs = null) {
+      const menu = document.getElementById('sidebarMenu');
+      const docsToRender = filteredDocs || DOCS;
+      
+      const categories = {};
+      docsToRender.forEach(doc => {
+        if (!categories[doc.category]) categories[doc.category] = [];
+        categories[doc.category].push(doc);
+      });
+
+      let html = '';
+      for (const [category, items] of Object.entries(categories)) {
+        html += `<div class="category-group">
+          <div class="category-title">${category}</div>`;
+        items.forEach(doc => {
+          const isActive = DOCS[currentDocIndex] && DOCS[currentDocIndex].id === doc.id ? 'active' : '';
+          html += `<a class="nav-item ${isActive}" onclick="loadDoc('${doc.id}')">${doc.title}</a>`;
+        });
+        html += `</div>`;
+      }
+      menu.innerHTML = html;
+    }
+
+    async function loadDoc(id) {
+      const index = DOCS.findIndex(d => d.id === id);
+      if (index === -1) return;
+
+      currentDocIndex = index;
+      window.location.hash = '#/' + id;
+
+      const doc = DOCS[index];
+      const contentArea = document.getElementById('contentArea');
+      contentArea.innerHTML = processMarkdown(doc.content);
+
+      const mermaidDivs = contentArea.querySelectorAll('.mermaid');
+      if (mermaidDivs.length > 0) {
+        try {
+          await mermaid.run({ nodes: mermaidDivs });
+        } catch(e) {
+          console.warn('Mermaid render warning:', e);
+        }
+      }
+
+      renderNavButtons();
+      renderSidebar();
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      document.getElementById('sidebar').classList.remove('open');
+    }
+
+    function renderNavButtons() {
+      const navContainer = document.getElementById('docNav');
+      let html = '';
+
+      if (currentDocIndex > 0) {
+        const prev = DOCS[currentDocIndex - 1];
+        html += `<div class="doc-btn" onclick="loadDoc('${prev.id}')">
+          <span class="doc-btn-label">← Anterior</span>
+          <span class="doc-btn-title">${prev.title}</span>
+        </div>`;
+      } else {
+        html += `<div></div>`;
+      }
+
+      if (currentDocIndex < DOCS.length - 1) {
+        const next = DOCS[currentDocIndex + 1];
+        html += `<div class="doc-btn" style="text-align: right; margin-left: auto;" onclick="loadDoc('${next.id}')">
+          <span class="doc-btn-label">Próximo →</span>
+          <span class="doc-btn-title">${next.title}</span>
+        </div>`;
+      }
+
+      navContainer.innerHTML = html;
+    }
+
+    document.getElementById('searchInput').addEventListener('input', function(e) {
+      const term = e.target.value.toLowerCase().trim();
+      if (!term) {
+        renderSidebar();
+        return;
+      }
+      const filtered = DOCS.filter(d => 
+        d.title.toLowerCase().includes(term) || 
+        d.content.toLowerCase().includes(term)
+      );
+      renderSidebar(filtered);
+    });
+
+    document.getElementById('menuToggle').addEventListener('click', function() {
+      document.getElementById('sidebar').classList.toggle('open');
+    });
+
+    window.addEventListener('hashchange', function() {
+      const hash = window.location.hash.replace('#/', '');
+      if (hash) {
+        loadDoc(hash);
+      }
+    });
+
+    const initialHash = window.location.hash.replace('#/', '');
+    if (initialHash && DOCS.some(d => d.id === initialHash)) {
+      loadDoc(initialHash);
+    } else {
+      loadDoc('00-dashboard');
+    }
+  </script>
+</body>
+</html>
